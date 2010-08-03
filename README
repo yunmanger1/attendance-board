@@ -1,0 +1,43 @@
+DJANGO-WATCHME
+==============
+
+
+### SRS
+
+1. There must be a daily job model. (M)
+2. Every daily job may consist of `n` parts. (M)
+ex: read `n` pages of some book per day.
+Once less than `n` is read, user will be able to specify it and 
+it will be seen in statistics.
+3. Daily job can be enabled or disabled (M)
+4. Daily job must have importace, `k` (M)
+5. Daily jobs statistics: успеваемость (M)
+according to `k` and `n` total percentage must be calculated.
+6. Daily jobs statistics: успеваемость (M)
+statistics can be seen as total, and for every distinct daily job.
+7. JOB (not daily) (O)
+Has all the properties as daily job has, except that it's not daily.
+Has it's own deadline (can be null).
+8. Group (O)
+Users can create a group. Entrance to groups can be as public
+and as private (by invitation). It's not seen what is done in private groups.
+9. Public JOB (O)
+Has all the properties as Job has.
+Also Public job can be assigned to members of the group,
+or members can assign to some part of public job.
+ex: read some documentation paper from page 300 to page 400.
+10. Public JOB division (O)
+When some part of public job is assigned to some one, 
+JOB is created for that user. And when user finishes with it,
+he marks that job as done. Public JOB is can be set as done by creator,
+or calculated as done when all the subjobs are done.
+11. Public jobs statistics (O)
+12. Registration by invitation (M)
+
+
+### Apps
+
++ flatpages
++ registration
++ captcha
++ threadedcomments
