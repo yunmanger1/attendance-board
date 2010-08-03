@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% load markup %}
+
+{% block content %}
+  <DIV class="posthead">
+	<H1>{{ flatpage.title }}</H1>
+  </DIV>
+  <DIV class="postcontent">
+	{{ flatpage.content|markdown }}
+  </DIV>
+{% endblock %}	

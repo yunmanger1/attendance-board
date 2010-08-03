@@ -1,0 +1,285 @@
+<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">-->
+<html xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<META name="distribution" content="global">
+<META name="robots" content="follow, all">
+<META name="language" content="ru, kz, en, tr">
+<LINK rel="shortcut icon" href="/media/static_media/styles/soulvision/images/favicon.ico" type="image/x-icon">
+<SCRIPT type="text/javascript" src="{{MEDIA_URL}}static_media/jscss/jquery.js"></SCRIPT>
+  <head>
+    <title>watchme - {% block title %}{% endblock %}</title>
+  {% block jsblock %}
+  {% endblock %}
+<style>
+  *{margin:0; padding:0;}
+
+body { background: rgb(232, 234, 236) none repeat scroll 0%;
+    font-family: Verdana,Tahoma,Arial,sans-serif;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-size: 76%;
+    font-size-adjust: none;
+    font-stretch: normal;
+    line-height: 1.4em;
+    text-align: center;
+    color: rgb(48, 48, 48);
+    -moz-background-clip: initial;
+    -moz-background-origin: initial;
+    -moz-background-inline-policy: initial;
+    }
+
+
+a{
+color:#467aa7;
+font-weight:bold;
+text-decoration:none;
+background-color:inherit;
+}
+
+a:hover{color:#2a5a8a; text-decoration:none; background-color:inherit;}
+a img{border:none;}
+
+p{padding:0 0 1.6em 0;}
+p form{margin-top:0; margin-bottom:20px;}
+
+img.left,img.center,img.right{padding:4px; border:1px solid #a0a0a0;}
+img.left{float:left; margin:0 12px 5px 0;}
+img.center{display:block; margin:0 auto 5px auto;}
+img.right{float:right; margin:0 0 5px 12px;}
+
+/**************** Header and navigation styles ****************/
+
+#container{
+width:760px;
+margin:50px auto; 20px; 20px;
+padding:1px 0;
+text-align:left;
+background:#ffffff;
+color:#303030;
+border:1px solid #a0a0a0;
+}
+#header1{
+height:110px;
+margin:0 1px 1px 1px;
+background:#467aa7;
+color:#ffffff;
+}
+#header{
+height:110px;
+padding:0;
+margin:0px 1px 1px 1px;
+background:#467aa7;
+color:#ffffff;
+}
+#header1 h1{
+padding:35px 0 0 20px;
+font-size:2.4em;
+background-color:inherit;
+color:#ffffff;
+letter-spacing:-2px;
+font-weight:normal;
+}
+#header1 h2{
+margin:10px 0 0 20px;
+font-size:1.4em;
+background-color:inherit;
+color:#ffffff;
+letter-spacing:-1px;
+font-weight:normal;
+}
+#navigation{
+height:2.2em;
+line-height:2.2em;
+margin:0 1px;
+background:#578bb8;
+color:#ffffff;
+}
+
+#navigation li{
+float:left;
+list-style-type:none;
+border-right:1px solid #ffffff;
+white-space:nowrap;
+}
+
+#navigation li a{
+display:block;
+padding:0 10px;
+font-size:0.8em;
+font-weight:normal;
+text-transform:uppercase;
+text-decoration:none;
+background-color:inherit;
+color: #ffffff;
+}
+
+* html #navigation a {width:1%;}
+
+#navigation .selected,#navigation a:hover{
+background:#80b0da;
+color:#ffffff;
+text-decoration:none;
+}
+
+/**************** Content styles ****************/
+
+#content{
+	float:left;
+	width:500px;
+	font-size:0.9em;
+	padding:20px 0px 0 30px;
+	text-align: justify;
+}
+
+#content h2{
+display:block;
+margin:10px 0 5px 0;
+font-size:1.7em;
+font-weight:normal;
+letter-spacing:-1px;
+color:#505050;
+background-color:inherit;
+}
+
+#content h2 a{font-weight:normal;}
+#content h3{margin:0 0 5px 0; font-size:1.4em; letter-spacing:-1px;}
+#content a:hover,#subcontent a:hover{text-decoration:underline;}
+#content ul,#content ol{margin:0 5px 16px 35px;}
+#content dl{margin:0 5px 10px 25px;}
+#content dt{font-weight:bold; margin-bottom:5px;}
+#content dd{margin:0 0 10px 15px;}
+
+/**************** Sidebar styles ****************/
+
+#subcontent{
+float:right;
+width:190px;
+padding:20px 20px 10px 0;
+line-height:1.4em;
+}
+
+#subcontent h2{
+display:block;
+margin:0 0 15px -10px;
+font-size:1.7em;
+font-weight:normal;
+text-align:left;
+letter-spacing:-1px;
+color:#505050;
+background-color:inherit;
+}
+
+#subcontent p{margin:0 0 16px 0; font-size:0.9em;}
+
+/**************** Menublock styles ****************/
+
+.menublock{margin:0 0 20px 8px; font-size:0.9em;}
+#subcontent li{list-style:none; display:block; padding:2px; margin-bottom:2px;}
+#subcontent li a{font-weight:bold; text-decoration:none;}
+#subcontent li a:hover{text-decoration:none;}
+#subcontent li ul{margin:3px 0 3px 15px; font-size:1em; font-weight:normal;}
+#subcontent li ul li{margin-bottom:0;}
+#subcontent li ul a{font-weight:normal;}
+
+.widget{margin:0 0 20px 8px; font-size:0.9em;}
+
+/**************** Footer styles ****************/
+
+#footer{
+clear:both;
+width:758px;
+padding:5px 0;
+margin:0 1px;
+font-size:0.9em;
+color:#f0f0f0;
+background:#467aa7;
+}
+
+#footer p{padding:0; margin:0; text-align:center;}
+#footer a{color:#f0f0f0; background-color:inherit; font-weight:bold;}
+#footer a:hover{color:#ffffff; background-color:inherit; text-decoration: underline;}
+
+/**************** Misc classes and styles ****************/
+
+.splitcontentleft{float:left; width:190px;}
+.splitcontentright{
+	float:right;
+	width:190px;
+	text-align: justify;
+}
+.clear{clear:both;}
+.small{font-size:0.9em;}
+.hide{display:none;}
+.textcenter{text-align:center;}
+.textright{text-align:right;}
+.important{color:#f02025; background-color:inherit; font-weight:bold;}
+
+.box{
+margin:0 0 20px 0;
+padding:10px;
+border:1px solid #c0c0c0;
+background-color:#fafbfc;
+color:#505050;
+line-height:1.5em;
+}
+.style2 {font-size: 12px}
+blockquote{
+	margin:20px 0;
+	padding:0 20px 0 50px;
+	background:url('http://photos1.blogger.com/blogger/7994/1253/1600/quote.jpg') 10px top no-repeat;
+	border:none;
+	color: #999999;
+}
+]]></style>
+  </head>
+
+  <body>
+  <div id='container'>
+
+    <!-- skip links for text browsers -->
+    <span id='skiplinks' style='display:none;'>
+      <a href='#main'>skip to main </a> |
+      <a href='#sidebar'>skip to sidebar</a>
+    </span>
+
+    <div id='header1'>
+      <b class='header' id='header' maxwidgets='1' showaddelement='no'>
+<b id='Header1' locked='true' title='Test (Header)' type='Header'>
+<b id='main'>
+    <h1 class='title'>
+        Watchme
+    </h1>
+    <h2>следи за собой</h2>
+</b>
+</b>
+</b>
+    </div>
+ 
+ <div id='navigation'>
+ <ul>
+ <li class='selected'><a href="">Ежедневные дела</a></li>
+ <li><a href=''>Статистика</a></li>
+ <li><a href=''>Группы</a></li>
+ <li><a href=''>Дела</a></li>
+ <li><a href=''>Настройки</a></li>
+ </ul>
+ </div>
+
+
+    <div id='content'>
+    {% block content %}
+    {% endblock %}
+    </div>
+
+      <!-- spacer for skins that want sidebar and main to be the same height-->
+      <div class='clear'>&#160;</div>
+
+    <div id='footer-wrapper'>
+      &copy; yun_man 2010, powered by django.
+    </div>
+
+  </div><!-- end outer-wrapper -->
+</body>
+</html>
+
