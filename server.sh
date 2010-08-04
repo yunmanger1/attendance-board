@@ -4,7 +4,7 @@
 
 case $2 in
 "start")
-$uwsgi_bin/uwsgi -s $socket -p 4 -M -t 20 -r -C -L -d ../wsgi.log wsgi
+$uwsgi_bin/uwsgi -s $socket -p 4 -M -t 20 -r -C -L -d ../wsgi_watchme.log wsgi
 sudo $nginx_bin/nginx -c $nginx_conf
 ;;
 "stop")
