@@ -20,7 +20,7 @@ def stat_home(request, template_name="jobapp/stat/home.html"):
 def stat_dailyjob(request, id, template_name="jobapp/stat/dailyjob.html"):
     job = DailyJob.objects.published().get(pk=id, user=request.user)
     ticks = job.dailyjobtick_set.all().only('date','done').order_by('date')
-    t = tuple([x.date for x in ticks])
+    t = [x.date for x in ticks]
     cur = t[0]# - datetime.timedelta(days=366)
     start = cur
     dt = datetime.timedelta(days=1)

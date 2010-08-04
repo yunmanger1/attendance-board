@@ -68,7 +68,7 @@ class DailyJobTick(models.Model):
         
     @models.permalink
     def edit_link(self):
-        return ('dailyjob_done_adv',(),{'id':self.job.pk}, {'date': self.date})
+        return ('dailyjob_done_edit',(),{'id':self.job.pk, 'tid': self.pk})
     
 class JobGroup(models.Model):
     def upload_dir(self, filename):

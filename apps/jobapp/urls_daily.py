@@ -11,5 +11,6 @@ urlpatterns = patterns('jobapp.views',
     url(r'^toggle/(?P<id>\d+)/$', 'dailyjob_toggle', name='dailyjob_toggle'),
     url(r'^tickarch/(?P<id>\d+)/$', 'dailyjob_tickarch', name="dailyjob_tickarch"),
     url(r'^done/(?P<id>\d+)/$', 'dailyjob_done', name="dailyjob_done_adv"),
+    url(r'^done/(?P<id>\d+)/(?P<tid>\d+)/$', 'dailyjob_done', name="dailyjob_done_edit"),
     url(r'^done/(?P<id>\d+)/today/$', 'dailyjob_done', {'date':'today'}, name="dailyjob_done"),
 )

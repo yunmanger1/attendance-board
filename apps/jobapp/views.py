@@ -51,7 +51,7 @@ def dailyjob_toggle(request, id):
     object.save()
     return HttpResponseRedirect(reverse('dailyjob_list'))
 
-def dailyjob_done(request, id=None, date=None, template_name="jobapp/dailyjob_tickform.html"):
+def dailyjob_done(request, id=None, date=None, tid=None, template_name="jobapp/dailyjob_tickform.html"):
     try:
         object = DailyJob.objects.published().get(pk=id, user=request.user)        
     except DailyJob.DoesNotExist:
@@ -61,16 +61,10 @@ def dailyjob_done(request, id=None, date=None, template_name="jobapp/dailyjob_ti
         #object.dailyjobtick_set.create(done=object.n, date=datetime.datetime.today())
         return HttpResponseRedirect(reverse('dailyjob_list'))
     else:
-        if date is None:
-            date = datetime.datetime.today()
         try:
-            tick = DailyJobTick.objects.get(job = object, date=date)
-        except DailyJobTick.MultipleObjectsReturned:
-            l = DailyJobTick.objects.filter(job = object, date=date)
-            tick = l[0]
-            l.exclude(pk=tick.pk).delete()
+            tick = DailyJobTick.objects.get(job = object, pk=tid)
         except DailyJobTick.DoesNotExist:
-            tick = DailyJobTick(job = object, date = date, done=object.n)
+            tick = DailyJobTick(job = object, done=object.n, date=datetime.datetime.today())
         if request.method == "POST":
             form = DailyJobTickForm(request.POST, instance=tick)
             if form.is_valid():

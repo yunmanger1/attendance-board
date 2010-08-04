@@ -20,7 +20,11 @@ class DailyJobTickForm(forms.ModelForm):
                  'done'    : self.cleaned_data.get('done'),
                  'date'     : self.cleaned_data.get('date'),
             }
-            i = DailyJobTick(**d)
+            try:
+                i = DailyJobTick.objects.get(job=job, date=self.cleaned_data.get('date'))
+                i.done = self.cleaned_data.get('done')
+            except DailyJobTick.DoesNotExist:
+                i = DailyJobTick(**d)
             i.save()
         return i
 
@@ -43,7 +47,7 @@ class DailyJobForm(forms.ModelForm):
                  'title'    : self.cleaned_data.get('title','no title'),
                  'text'     : self.cleaned_data.get('text','no text'),
                  'n'        : self.cleaned_data.get('n',1),
-            }
+            }             
             i = DailyJob(**d)
             i.save()
         return i
