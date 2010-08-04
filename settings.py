@@ -43,6 +43,7 @@ TIME_ZONE = 'Asia/Almaty'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'ru-RU'
+LANGUAGES = (("ru","Russian"),("en","English"))
 
 SITE_ID = 1
 
@@ -85,6 +86,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 "django.core.context_processors.i18n",
 "django.core.context_processors.media",
 "django.contrib.messages.context_processors.messages",
+'django.core.context_processors.i18n',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -119,10 +121,14 @@ INSTALLED_APPS = (
     'django-backup',
 #    'tagging',
     'south',
+    'sorl.thumbnail',
 #    'basic.inlines',
 #    'photologue',
 #    'haystack',
     'robots',
+    'uni_form',
+    
+    'jobapp',
 )
 
 try:
@@ -133,3 +139,6 @@ except ImportError:
 sys.path.append(os.path.join(DISTR_DIR,"django-trunk"))
 sys.path.append(LIB_DIR)
 sys.path.append(rel('apps'))
+
+THUMBNAIL_EXTENSION = 'png'
+THUMBNAIL_DEBUG = DEBUG

@@ -1,0 +1,26 @@
+{% load i18n %}
+<div>
+<div class="button-fr">
+{% if not object.is_done_today %}
+<a href="{% url dailyjob_done id=object.pk %}" title="{{_("done for today")}}"><img src="{{MEDIA_URL}}static_media/images/accept.png" /></a>
+{% endif %}
+<a href="{% url dailyjob_done_adv id=object.pk %}" title="{{_("fill in manually")}}">{{_("advanced")}}</a>
+</div>
+<h3>{{ object}} 
+{% if object.is_on %}
+<a class="btn btn-enable" style="background-color:inherit;" title="{{_("enabled")}}">&nbsp;</a>
+{% else %}
+<a class="btn btn-disable" style="background-color:inherit;" title="{{_("disabled")}}">&nbsp;</a>
+{% endif %}
+</h3>
+n: {{ object.n }}
+{{object.text|linebreaks}}
+{% if object.is_on %}
+<a class="btn btn-disable" href="{{ object.toggle_link }}" title="{{_("disable")}}">{{_("disable")}}</a>
+{% else %}
+<a class="btn btn-enable" href="{{ object.toggle_link }}" title="{{_("enable")}}">{{_("enable")}}</a>
+{% endif %}
+<a href="{{ object.del_link }}" onClick="if(!confirm('{{_("are you sure?")}}')){return false;}" class="btn btn-delete">delete</a>
+<a class="btn btn-go" href="{% url dailyjob_tickarch id=object.pk %}" title="{{_("ticks archive")}}">{{_("archive")}}</a>
+<a class="btn btn-go" href="{{ object.stat_link }}">statistics</a>
+</div>

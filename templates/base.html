@@ -4,15 +4,21 @@
 <META name="distribution" content="global">
 <META name="robots" content="follow, all">
 <META name="language" content="ru, kz, en, tr">
-<LINK rel="shortcut icon" href="/media/static_media/styles/soulvision/images/favicon.ico" type="image/x-icon">
+<LINK rel="shortcut icon" href="/media/static_media/styles/andreas/favicon.ico" type="image/x-icon">
 <SCRIPT type="text/javascript" src="{{MEDIA_URL}}static_media/jscss/jquery.js"></SCRIPT>
+<SCRIPT type="text/javascript" src="{{MEDIA_URL}}static_media/jscss/jquery.tools.min.js"></SCRIPT>
   <head>
     <title>watchme - {% block title %}{% endblock %}</title>
   {% block jsblock %}
   {% endblock %}
 <style>
   *{margin:0; padding:0;}
-
+input[type=text], input[type=password], textarea, .date {
+	border:1px solid #ccc;
+	font-size:18px;
+	padding:4px;
+	-moz-box-shadow:0 0 10px #eee inset;
+}
 body { background: rgb(232, 234, 236) none repeat scroll 0%;
     font-family: Verdana,Tahoma,Arial,sans-serif;
     font-style: normal;
@@ -131,7 +137,16 @@ text-decoration:none;
 	padding:20px 0px 0 30px;
 	text-align: justify;
 }
-
+#content h1{
+display:block;
+margin:10px 0 5px 0;
+font-size:1.7em;
+font-weight:bold;
+letter-spacing:-1px;
+color:#505050;
+background-color:inherit;
+}
+.objectlist li{list-style:none; display:block; padding:2px; margin-bottom:2px;}
 #content h2{
 display:block;
 margin:10px 0 5px 0;
@@ -231,6 +246,44 @@ blockquote{
 	border:none;
 	color: #999999;
 }
+.button-fr {
+	float:right;
+	text-align:center;
+}
+.button-fr a {display:block;}
+.noimg img{
+width: 0px;
+height: 0px;
+display:absolute;
+}
+.btn{
+padding: 0px 3px 2px 0;
+background-repeat: no-repeat;
+background-position: -5px;
+text-indent: 23px;
+height: 16px;
+display:inline-block;
+background-color: #eee;
+}
+.btn-add{
+background-image: url('/media/static_media/images/bullet_add.png');
+}
+.btn-delete{
+background-image: url('/media/static_media/images/bullet_delete.png');
+}
+.btn-go{
+background-image: url('/media/static_media/images/bullet_go.png');
+}
+.btn-enable{
+background-image: url('/media/static_media/images/bullet_green.png');
+}
+.btn-disable{
+background-image: url('/media/static_media/images/bullet_black.png');
+}
+form label {
+display: block;
+}
+hr{border:1px dashed #eee;margin:10px;}
 ]]></style>
   </head>
 
@@ -245,7 +298,7 @@ blockquote{
 
     <div id='header1'>
       <b class='header' id='header' maxwidgets='1' showaddelement='no'>
-<b id='Header1' locked='true' title='Test (Header)' type='Header'>
+<b id='Header1' type='Header'>
 <b id='main'>
     <h1 class='title'>
         Watchme
@@ -258,11 +311,11 @@ blockquote{
  
  <div id='navigation'>
  <ul>
- <li class='selected'><a href="">Ежедневные дела</a></li>
- <li><a href=''>Статистика</a></li>
- <li><a href=''>Группы</a></li>
- <li><a href=''>Дела</a></li>
- <li><a href=''>Настройки</a></li>
+ <li {% if curpage == "daily" %}class='selected'{% endif %}><a href="{% url dailyjob_list %}">Ежедневные дела</a></li>
+ <li {% if curpage == "stat" %}class='selected'{% endif %}><a href=''>Статистика</a></li>
+ <li {% if curpage == "groups" %}class='selected'{% endif %}><a href=''>Группы</a></li>
+ <li {% if curpage == "jobs" %}class='selected'{% endif %}><a href=''>Дела</a></li>
+ <li {% if curpage == "settings" %}class='selected'{% endif %}><a href=''>Настройки</a></li>
  </ul>
  </div>
 
@@ -276,7 +329,7 @@ blockquote{
       <div class='clear'>&#160;</div>
 
     <div id='footer-wrapper'>
-      &copy; yun_man 2010, powered by django.
+      &copy; <a href="http://buben.kz/">yun_man_ger</a> 2010, powered by <a href="http://djangoproject.com/">django</a>.
     </div>
 
   </div><!-- end outer-wrapper -->

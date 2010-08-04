@@ -1,0 +1,23 @@
+{% extends "jobapp/base.html" %}
+
+{% block content %}
+<!-- <h1>{{_("daily jobs")}}</h1>  -->
+<a class="btn btn-add" href="{% url dailyjob_add %}" title="{{_("Add new everyday job")}}">{{_("add dailyjob")}}</a> |
+<a class="btn btn-go" href="{% url dailyjob_add %}" title="{{_("My daily jobs statistics")}}">{{_("total statistics")}}</a>
+
+<ul class="objectlist">
+{% for object in object_list %}
+<li>{% include "jobapp/dailyjob_item.html"%}</li>
+{% if not forloop.last %}
+<hr>
+{% endif %}
+{% endfor %}
+</ul>
+<div class="noimg">
+<img src="{{MEDIA_URL}}static_media/images/bullet_add.png" />
+<img src="{{MEDIA_URL}}static_media/images/bullet_go.png" />
+<img src="{{MEDIA_URL}}static_media/images/bullet_toggle_minus.png" />
+<img src="{{MEDIA_URL}}static_media/images/bullet_toggle_plus.png" />
+</div>
+
+{% endblock %}

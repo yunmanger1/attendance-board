@@ -1,0 +1,73 @@
+var options = {
+      chart: {
+         renderTo: 'chart-container',
+         zoomType: 'x'
+      },
+      title: {
+         text: '{{ object.title }}'
+      },
+      subtitle: {
+         text: 'Кликни и тяни чтобы увеличить'
+      },
+      xAxis: {
+         type: 'datetime',
+         maxZoom: 7* 24 * 3600000, // one day
+         //minZoom: 1 * 24 * 3600000,
+         title: {
+            text: null
+         }
+      },
+      yAxis: {
+         title: {
+            text: 'Успеваемость'
+         },
+         min: 0.6,
+         startOnTick: false,
+         showFirstLabel: false
+      },
+      tooltip: {
+         formatter: function() {
+            return ''+ Highcharts.dateFormat('%d %b %Y', this.x)+ ':' + Highcharts.numberFormat(this.y, 2) +'';
+         }
+      },
+      legend: {
+         enabled: false
+      },
+      plotOptions: {
+         area: {
+            fillColor: {
+               linearGradient: [0, 0, 0, 300],
+               stops: [
+                  [0, '#ccc'],//highchartsOptions.colors[0]
+                  [1, 'rgba(2,0,0,0)']
+               ]
+            },
+            lineWidth: 1,
+            marker: {
+               enabled: false,
+               states: {
+                  hover: {
+                     enabled: true,
+                     radius: 5
+                  }
+               }
+            },
+            shadow: false,
+            states: {
+               hover: {
+                  lineWidth: 1                  
+               }
+            }
+         }
+      },
+   
+      series: [{
+         type: 'area',
+         name: '',
+         pointInterval: 24 * 3600 * 1000,
+         pointStart: Date.UTC({{start.year}},{{start.month|add:-1}},{{start.day}}),
+         data: {{ serie }}
+      }]
+   };
+
+   

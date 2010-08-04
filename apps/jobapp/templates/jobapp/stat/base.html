@@ -1,0 +1,10 @@
+{% extends "jobapp/base.html" %}
+
+{% block jsblock %}
+{{ block.super }}
+<script type="text/javascript" src="{{ MEDIA_URL }}static_media/jscss/highcharts.js"></script> 
+<!--[if IE]>
+	<script type="text/javascript" src="{{ MEDIA_URL }}static_media/jscss/excanvas.compiled.js"></script>
+<![endif]--> 
+
+{% endblock %}

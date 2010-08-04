@@ -1,0 +1,39 @@
+{% extends "jobapp/stat/base.html" %}
+
+{% block jsblock %}
+{{ block.super }}
+<script type="text/javascript"> 
+	var stat = {};
+	stat.addusers = function(form){
+		stat.chart.showLoading();
+	    $.ajax({
+	        type: "POST",
+	        dataType: "json",
+	        data: $(form).serialize(),
+	        success: function(json){
+	            if (json.error){
+	            	alert(json.error);
+	            }else{
+	            	$(form).find('input[name=users]').val('');
+	            	for(i = 0; i < json.length; i++)
+	            		stat.chart.addSeries(json[i]);
+	            }
+	        	stat.chart.hideLoading();
+	        },
+	        error: function(){
+	        	stat.chart.hideLoading();
+	        }
+	    });
+	return false;
+}
+$(document).ready(function() {
+	{% include "jobapp/stat/chart-zoomable.html"%}
+	stat.chart = new Highcharts.Chart(options);
+});
+</script> 
+		
+{% endblock %}
+
+{% block content %}
+<div id="chart-container" style="width: 700px; height: 400px; margin: 0 auto; clear: both;"></div>
+{% endblock %}
