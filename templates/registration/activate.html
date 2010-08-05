@@ -1,0 +1,16 @@
+{% extends "registration/base_register.html" %}
+{% load i18n %}
+{% block title %}{% trans "Account activation" %}{% endblock %}
+{% block content_header %}{% trans "Account activation" %}{% endblock %}
+{% block middle-column %}
+{% load humanize %}
+
+{% if account %}
+<h1 class="sectiontitle">{{_("congratulations")|capfirst}}!</h1>
+<p class="sectionintrotext">{% trans "Please login" %} <a href="{% url auth_login %}">{{_("here")}}</a> {{_("to start ireport")}}</p>
+{% else %}
+<h1 class="sectiontitle">{{_("sorry")|capfirst}}!</h1>
+<p class="sectionintrotext">{% trans "Either your activation link was incorrect, or the activation key for your account has expired; activation keys are only
+valid for {{ expiration_days|apnumber }} days after registration." %}</p>
+{% endif %}
+{% endblock %}

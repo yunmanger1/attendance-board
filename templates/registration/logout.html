@@ -1,0 +1,13 @@
+{% extends "registration/base_register.html" %}
+{% load i18n %}
+{% block title %}{{_("logged out")|capfirst}}{% endblock %}
+
+{% block content_header %}{{_("logged out")|capfirst}}{% endblock %}
+
+{% block middle-column %}
+
+<h1 class="sectiontitle">{{_("logout")|capfirst}}</h1>
+<p class="sectionintrotext">{% trans "You've been logged out." %}</p>
+<p id="signinlinks"><a href="{% url auth_login %}" class="lightbluelink">{{_("login")|capfirst}}</a><br/></p>
+
+{% endblock %}

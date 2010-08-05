@@ -12,6 +12,9 @@ urlpatterns = patterns('',
     (r'^ja/', include('jobapp.urls')),
     (r'^admin/', include(admin.site.urls)),
     (r'^robots\.txt', 'robots.views.rules_list'),
+    (r'^accounts/', include('invitation.urls')),
+    (r'^accounts/', include('registration.urls')),
+    (r'^i18n/', include('django.conf.urls.i18n')),
 #    (r'^sitemap\.xml$', 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
 )
 

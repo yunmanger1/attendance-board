@@ -43,7 +43,12 @@ TIME_ZONE = 'Asia/Almaty'
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'ru-RU'
-LANGUAGES = (("ru","Russian"),("en","English"))
+LANGUAGES = (
+    ("ru","Russian"),
+    ("en","English"),
+#    ("kz","Kazakh"),
+#    ("tr","Turkish"),
+)
 
 SITE_ID = 1
 
@@ -94,6 +99,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'common.middleware.UserLanguageMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
@@ -127,8 +134,11 @@ INSTALLED_APPS = (
 #    'haystack',
     'robots',
     'uni_form',
+    'registration',
+    'invitation',
     
     'jobapp',
+    'common',
 )
 
 try:
@@ -142,3 +152,24 @@ sys.path.append(rel('apps'))
 
 THUMBNAIL_EXTENSION = 'png'
 THUMBNAIL_DEBUG = DEBUG
+
+#invitation
+INVITE_MODE = True
+ACCOUNT_INVITATION_DAYS = 15
+INVITATIONS_PER_USER = 50
+
+# we need this for registration stuff
+REQUIRE_EMAIL_CONFIRMATION = True
+ACCOUNT_ACTIVATION_DAYS = ACCOUNT_INVITATION_DAYS
+LOGIN_REDIRECT_URL = '/ja/daily/'
+LOGIN_URL = '/accounts/login/'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'watchme.kz@gmail.com'
+EMAIL_HOST_PASSWORD = 'damnsimple'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_SUBJECT_PREFIX = '[watchme.kz] '
+SERVER_EMAIL = 'no-reply@watchme.kz'
+DEFAULT_FROM_EMAIL = 'no-reply@watchme.kz'
+

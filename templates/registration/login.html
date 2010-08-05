@@ -1,0 +1,40 @@
+{% extends "registration/base_register.html" %}
+{% load i18n %}
+{% block title %}{{_("log in")|capfirst}}{% endblock %}
+
+{% block content_header %}{{_("log in")|capfirst}}{% endblock %}
+
+{% block middle-column %}
+
+<h1 class="sectiontitle">{{_("log in")|capfirst}}</h1>
+{% if user.is_authenticated %}
+<p >{% blocktrans with user.username as username%}Hi {{ username }}{% endblocktrans %}</p>
+<p id="signinlinks"><a href="{% url auth_logout %}" class="lightbluelink">{{_("logout")|capfirst}}</a><br/></p>
+{% else %}
+{% if errors %}
+<p class="error sectionintrotext">{{_("please correct the errors below")|capfirst}}:</p>
+{% endif %}
+
+<div class="logincontainer">
+	<div class="clearit"></div>
+	<div id="signinbox">
+		<form method="post" action="{% if next %}?next={{ next }}{% endif %}" id="signinform">
+		{% csrf_token %}
+			<p><label for="id_username">{{_("username")|capfirst}}</label><br />{% if form.username.errors %} <span class="error">{{ form.username.errors|join:", " }}</span>{% endif %}
+			{{ form.username }}
+			</p>
+			<p><label for="id_password">{{_("password")|capfirst}}</label><br />{% if form.password.errors %} <span class="error">{{ form.password.errors|join:", " }}</span>{% endif %}
+			{{ form.password }}
+			</p>
+			<input type="submit" id="signinhiddensubmit" value="{{_("login")|capfirst}}" />
+			<div id="signinbuttonrollover">
+				<a href="/accounts/login/" onclick="document.getElementById('signinform').submit(); return false;"></a>
+			</div>
+			<p id="signinlinks"><a href="{% url registration_register %}" class="lightbluelink">{% trans "Sign up here" %}</a><br/><a href="{% url auth_password_reset %}" class="lightbluelink">{% trans "Forgotten password?" %}</a></p>
+		</form>
+		<div id="signinbottom"></div>
+	</div>
+	<div class="clearit"></div>
+</div>
+{% endif %}
+{% endblock %}

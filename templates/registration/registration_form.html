@@ -1,0 +1,16 @@
+﻿{% extends "registration/base_register.html" %}
+{% load i18n uni_form %}
+
+{% block title %}{{_("registration")|capfirst }}{% endblock %}
+
+{% block middle-column %}
+<form method="POST">
+{% csrf_token %}
+{{ form|as_uni_form }}
+<br>
+<a href="#">{{_("I have read and agree to the Terms of Service")}}</a><br>
+<br>
+<input type="submit" value="{{_("register")}}"/>
+<p id="signinlinks"><a href="{% url auth_login %}" class="lightbluelink">{% trans "Already signed up? Login here" %}</a></p>
+</form>
+{% endblock %}

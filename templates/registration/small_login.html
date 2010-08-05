@@ -1,0 +1,19 @@
+{% if user.is_authenticated %}
+<p >Hello {{ user.username }}</p>
+<p id="signinlinks"><a href="{% url auth_logout %}" class="lightbluelink">Logout</a><br/></p>
+{% else %}
+
+		<form method="post" action="{% url auth_small_login %}" id="signinform">
+			<p><label for="id_username">Username</label><br />{% if form.username.errors %} <span class="error">{{ form.username.errors|join:", " }}</span>{% endif %}
+			{{ form.username }}
+			</p>
+			<p><label for="id_password">Password</label><br />{% if form.password.errors %} <span class="error">{{ form.password.errors|join:", " }}</span>{% endif %}
+			{{ form.password }}
+			</p>
+			<input type="hidden" name='redirect_field_name' value='{% url registration_register %}'>
+			<input type="submit" id="signinhiddensubmit" />
+			<div id="signinbuttonrollover">
+				<a href="#" onclick="document.getElementById('signinform').submit(); return false;"></a>
+			</div>
+		</form>
+{% endif %}
