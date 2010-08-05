@@ -7,7 +7,7 @@
 
 {% if account %}
 <h1 class="sectiontitle">{{_("congratulations")|capfirst}}!</h1>
-<p class="sectionintrotext">{% trans "Please login" %} <a href="{% url auth_login %}">{{_("here")}}</a> {{_("to start ireport")}}</p>
+<p class="sectionintrotext">{% trans "Please login" %} <a href="{% url auth_login %}">{{_("here")}}</a> {{_("to start using the site!")}}</p>
 {% else %}
 <h1 class="sectiontitle">{{_("sorry")|capfirst}}!</h1>
 <p class="sectionintrotext">{% trans "Either your activation link was incorrect, or the activation key for your account has expired; activation keys are only
