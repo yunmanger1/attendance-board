@@ -1,1 +1,1 @@
-{{EMAIL_SUBJECT_PREFIX}}Добро пожаловать на {{ site_name }}
+{{EMAIL_SUBJECT_PREFIX}}Добро пожаловать!

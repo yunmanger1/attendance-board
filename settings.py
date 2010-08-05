@@ -80,7 +80,7 @@ SECRET_KEY = 'x7+2eb0f2zd_to48j11jrrk*j*bm_4k$%w%(%h0_1f-33mdrd*'
 #email stuff
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'watchme.kz@gmail.com'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = 'damnsimple'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_SUBJECT_PREFIX = '[watchme.kz] '

@@ -1,0 +1,10 @@
+{% extends "registration/base_register.html" %}
+{% block title %}{{_("activation complete")|capfirst}}{% endblock %}
+
+{% block content_header %}{{_("activation complete")|capfirst}}{% endblock %}
+
+{% block middle-column %}
+
+<h1 class="sectiontitle">{{_("thanks for signing up")|capfirst}}!</h1>
+<p class="sectionintrotext">{{_("Your registration is complete. You can now")}} <a href="/accounts/login/" class="lightbluelink">{{_("login here")}}</a></p>
+{% endblock %}
