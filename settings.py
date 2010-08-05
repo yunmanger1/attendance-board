@@ -166,7 +166,7 @@ LOGIN_URL = '/accounts/login/'
 
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'watchme.kz@gmail.com'
-EMAIL_HOST_PASSWORD = 'damnsimple'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_SUBJECT_PREFIX = '[watchme.kz] '
