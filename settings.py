@@ -77,6 +77,16 @@ ADMIN_MEDIA_PREFIX = '/media/admin/'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'x7+2eb0f2zd_to48j11jrrk*j*bm_4k$%w%(%h0_1f-33mdrd*'
 
+#email stuff
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'watchme.kz@gmail.com'
+EMAIL_HOST_PASSWORD = ''
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_SUBJECT_PREFIX = '[watchme.kz] '
+SERVER_EMAIL = 'no-reply@watchme.kz'
+DEFAULT_FROM_EMAIL = 'no-reply@watchme.kz'
+
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
@@ -163,13 +173,3 @@ REQUIRE_EMAIL_CONFIRMATION = True
 ACCOUNT_ACTIVATION_DAYS = ACCOUNT_INVITATION_DAYS
 LOGIN_REDIRECT_URL = '/ja/daily/'
 LOGIN_URL = '/accounts/login/'
-
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'watchme.kz@gmail.com'
-EMAIL_HOST_PASSWORD = ''
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_SUBJECT_PREFIX = '[watchme.kz] '
-SERVER_EMAIL = 'no-reply@watchme.kz'
-DEFAULT_FROM_EMAIL = 'no-reply@watchme.kz'
-
