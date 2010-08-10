@@ -13,4 +13,5 @@ urlpatterns = patterns('jobapp.views',
     url(r'^done/(?P<id>\d+)/$', 'dailyjob_done', name="dailyjob_done_adv"),
     url(r'^done/(?P<id>\d+)/(?P<tid>\d+)/$', 'dailyjob_done', name="dailyjob_done_edit"),
     url(r'^done/(?P<id>\d+)/today/$', 'dailyjob_done', {'date':'today'}, name="dailyjob_done"),
+    url(r'^done/(?P<id>\d+)/n/(?P<n>\d+)/$', 'dailyjob_done', {'date':'today'}, name="dailyjob_done_n"),
 )

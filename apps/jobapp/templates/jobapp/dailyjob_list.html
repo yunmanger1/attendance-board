@@ -1,22 +1,49 @@
 {% extends "jobapp/base.html" %}
 
+{% block jsblock %}
+{{ block.super }}
+<script>
+$(function(){
+$("div.handle").click(function(){
+	var id = '#itemdet-'+$(this).attr('ref');
+	if (!readCookie(id)){
+		$(this).removeClass('btn-plus').addClass('btn-minus');
+		createCookie(id,true,1);
+		$(id).slideDown();
+	}else{
+		$(this).removeClass('btn-minus').addClass('btn-plus');
+		eraseCookie(id);
+		$(id).slideUp();
+	}
+});
+
+$('div.handle').each(function(){
+	var id = '#itemdet-'+$(this).attr('ref');
+	if(!readCookie(id)){
+		$(id).hide();
+	}else{
+		$(this).removeClass('btn-plus').addClass('btn-minus');
+	}
+});
+});
+</script>
+{% endblock %}
+
 {% block content %}
 <!-- <h1>{{_("daily jobs")}}</h1>  -->
 <a class="btn btn-add" href="{% url dailyjob_add %}" title="{{_("Add new everyday job")}}">{{_("add dailyjob")}}</a> |
 <a class="btn btn-go" title="{{_("My daily jobs statistics")}}">{{_("total statistics")}}</a>
 
-<div>
+<div style="padding-top:10px;">
 {% if not object_list %}
 <h2>{{_("you don't have any daily jobs yet. ")}}</h2>
 {% else %}
-<ul class="objectlist">
 {% for object in object_list %}
-<li>{% include "jobapp/dailyjob_item.html"%}</li>
+{% include "jobapp/dailyjob_item.html"%}
 {% if not forloop.last %}
 <hr>
 {% endif %}
 {% endfor %}
-</ul>
 {% endif %}
 <div class="noimg">
 <img src="{{MEDIA_URL}}static_media/images/bullet_add.png" />

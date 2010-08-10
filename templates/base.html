@@ -263,7 +263,7 @@ width: 0px;
 height: 0px;
 display:absolute;
 }
-.btn{
+.btn, .bullet{
 padding: 0px 3px 2px 0;
 background-repeat: no-repeat;
 background-position: -5px;
@@ -272,6 +272,9 @@ height: 16px;
 display:inline-block;
 background-color: #eee;
 }
+.bullet{background-color: inherit;}
+.fr{float:right;}
+.fl{float:left;}
 .btn-add{
 background-image: url('/media/static_media/images/bullet_add.png');
 }
@@ -281,16 +284,26 @@ background-image: url('/media/static_media/images/bullet_delete.png');
 .btn-go{
 background-image: url('/media/static_media/images/bullet_go.png');
 }
-.btn-enable{
+.btn-enable, .btn-green{
 background-image: url('/media/static_media/images/bullet_green.png');
+}
+.btn-red{
+background-image: url('/media/static_media/images/bullet_red.png');
 }
 .btn-disable{
 background-image: url('/media/static_media/images/bullet_black.png');
+}
+.btn-plus{
+background-image: url('/media/static_media/images/bullet_toggle_plus.png');
+}
+.btn-minus{
+background-image: url('/media/static_media/images/bullet_toggle_minus.png');
 }
 form label {
 display: block;
 }
 hr{border:1px dashed #eee;margin:10px;}
+.hidden{display:none;}
 ]]></style>
   </head>
 

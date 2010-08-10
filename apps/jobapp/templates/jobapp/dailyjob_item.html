@@ -1,18 +1,15 @@
 {% load i18n %}
 <div>
+<div><font size=3><a href="{{ object.stat_link }}">{{ object }}</a></font>
+<div class="handle bullet btn-plus" ref="{{ object.pk }}" href="{{ object.stat_link }}">&nbsp;</div>
+<a class="bullet btn-green fr" href="{% url dailyjob_done id=object.pk %}" title="{{_("done for today")}}">&nbsp;</a> 
+<a class="bullet btn-red fr" href="{% url dailyjob_done_n id=object.pk n=0 %}" title="{{_("not done")}}">&nbsp;</a>
+
+</div>
+<div id="itemdet-{{ object.pk }}" class="itemdet">
 <div class="button-fr">
-{% if not object.is_done_today %}
-<a href="{% url dailyjob_done id=object.pk %}" title="{{_("done for today")}}"><img src="{{MEDIA_URL}}static_media/images/accept.png" /></a>
-{% endif %}
 <a href="{% url dailyjob_done_adv id=object.pk %}" title="{{_("fill in manually")}}">{{_("advanced")}}</a>
 </div>
-<h3>{{ object}} 
-{% if object.is_on %}
-<a class="btn btn-enable" style="background-color:inherit;" title="{{_("enabled")}}">&nbsp;</a>
-{% else %}
-<a class="btn btn-disable" style="background-color:inherit;" title="{{_("disabled")}}">&nbsp;</a>
-{% endif %}
-</h3>
 n: {{ object.n }}
 {{object.text|linebreaks}}
 {% if object.is_on %}
@@ -23,4 +20,5 @@ n: {{ object.n }}
 <a href="{{ object.del_link }}" onClick="if(!confirm('{{_("are you sure?")}}')){return false;}" class="btn btn-delete">delete</a>
 <a class="btn btn-go" href="{% url dailyjob_tickarch id=object.pk %}" title="{{_("ticks archive")}}">{{_("archive")}}</a>
 <a class="btn btn-go" href="{{ object.stat_link }}">statistics</a>
+</div>
 </div>

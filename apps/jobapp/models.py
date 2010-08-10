@@ -58,7 +58,7 @@ class DailyJob(models.Model):
     
 class DailyJobTick(models.Model):
     job         = models.ForeignKey(DailyJob)
-    done        = models.IntegerField()
+    done        = models.IntegerField(default=0)
     date        = models.DateField()
     #TODO: check if auto_now_add is right
     pub_date    = models.DateTimeField(auto_now_add=True)

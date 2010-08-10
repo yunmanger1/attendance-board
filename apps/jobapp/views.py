@@ -51,13 +51,17 @@ def dailyjob_toggle(request, id):
     object.save()
     return HttpResponseRedirect(reverse('dailyjob_list'))
 
-def dailyjob_done(request, id=None, date=None, tid=None, template_name="jobapp/dailyjob_tickform.html"):
+def dailyjob_done(request, id=None, date=None, tid=None, n=None, template_name="jobapp/dailyjob_tickform.html"):
     try:
         object = DailyJob.objects.published().get(pk=id, user=request.user)        
     except DailyJob.DoesNotExist:
         raise Http404
     if date == "today":
-        tick, c = DailyJobTick.objects.get_or_create(job = object, done=object.n, date=datetime.datetime.today()) 
+        if n is None:
+            n = object.n
+        tick, c = DailyJobTick.objects.get_or_create(job = object, date=datetime.datetime.today())
+        tick.done = n
+        tick.save() 
         #object.dailyjobtick_set.create(done=object.n, date=datetime.datetime.today())
         return HttpResponseRedirect(reverse('dailyjob_list'))
     else:
