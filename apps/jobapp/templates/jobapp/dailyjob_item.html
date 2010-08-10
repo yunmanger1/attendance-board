@@ -2,9 +2,10 @@
 <div>
 <div><font size=3><a href="{{ object.stat_link }}">{{ object }}</a></font>
 <div class="handle bullet btn-plus" ref="{{ object.pk }}" href="{{ object.stat_link }}">&nbsp;</div>
-<a class="bullet btn-green fr" href="{% url dailyjob_done id=object.pk %}" title="{{_("done for today")}}">&nbsp;</a> 
-<a class="bullet btn-red fr" href="{% url dailyjob_done_n id=object.pk n=0 %}" title="{{_("not done")}}">&nbsp;</a>
-
+{% with object.get_today as tick %}
+<a class="bullet btn-green fr {% if tick.done > 0 %}chosen{% endif %}" href="{% url dailyjob_done id=object.pk %}" title="{{_("done for today")}}">&nbsp;</a> 
+<a class="bullet btn-red fr {% if tick.done == 0 %}chosen{% endif %}" href="{% url dailyjob_done_n id=object.pk n=0 %}" title="{{_("not done")}}">&nbsp;</a>
+{% endwith %}
 </div>
 <div id="itemdet-{{ object.pk }}" class="itemdet">
 <div class="button-fr">

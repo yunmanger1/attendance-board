@@ -51,6 +51,12 @@ class DailyJob(models.Model):
         l = self.dailyjobtick_set.filter(date=datetime.datetime.today()).count()
         if l != 0: return True
         return False
+    
+    def get_today(self):
+        try:
+            return self.dailyjobtick_set.filter(date=datetime.datetime.today())[0]
+        except:
+            return None
         
         
     def __unicode__(self):
