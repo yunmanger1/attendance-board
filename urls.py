@@ -10,6 +10,7 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
     (r'^ja/', include('jobapp.urls')),
+    (r'^m/', include('jobapp.urls_mobile')),
     (r'^admin/', include(admin.site.urls)),
     (r'^robots\.txt', 'robots.views.rules_list'),
     (r'^accounts/', include('invitation.urls')),

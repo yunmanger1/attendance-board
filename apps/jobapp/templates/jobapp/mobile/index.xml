@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<description>
+	<user>
+		<username>{{ user.username }}</username>
+	</user>
+	<dailyjobs>
+	{% for object in dailyjob_list %}
+		<dailyjob>
+			<title>{{ object.title }}</title>
+			<text>{{ object.text }}</text>
+			<n>{{ object.n }}</n>
+			<importance>{{ object.imprtance }}</importance>
+		</dailyjob>
+	{% endfor %}
+	</dailyjobs>
+</description>
