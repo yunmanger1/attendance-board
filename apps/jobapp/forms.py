@@ -2,6 +2,9 @@ from django import forms
 
 from jobapp.models import DailyJobTick, DailyJob
 
+class DateForm(forms.Form):
+    date = forms.DateField()
+
 class DailyJobTickForm(forms.ModelForm):
 
     class Meta:

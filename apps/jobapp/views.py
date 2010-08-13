@@ -7,15 +7,27 @@ from django.views.generic import list_detail
 from django.conf import settings
 
 from jobapp.models import DailyJob, DailyJobTick, Job, JobGroup
-from jobapp.forms import DailyJobForm, DailyJobTickForm
+from jobapp.forms import DailyJobForm, DailyJobTickForm, DateForm
 
 import datetime
 
 @login_required
-def dailyjob_list(request, template_name="jobapp/dailyjob_list.html"):
+def dailyjob_list(request, year=None, month=None, day=None, template_name="jobapp/dailyjob_list.html"):
     user = request.user
     list = DailyJob.objects.published().filter(user=user)
-    c = RequestContext(request, {'object_list' : list, 'curpage': 'daily'})
+    if year is not None and month is not None and day is not None:
+        date = datetime.datetime(year=int(year), month=int(month), day = int(day))
+    else:
+        date = datetime.datetime.today()    
+
+    if request.method=="POST":
+        form = DateForm(request.POST)
+        if form.is_valid():
+            d = form.cleaned_data.get('date',None)
+            return HttpResponseRedirect(reverse('dailyjob_list_dated',kwargs={'year': d.year, 'month': d.month, 'day': d.day}))
+    else:
+        form = DateForm(initial={'date': date})
+    c = RequestContext(request, {'object_list' : list, 'curpage': 'daily', 'date_form': form, 'date': date })
     return render_to_response(template_name, c)
 
 
@@ -51,15 +63,20 @@ def dailyjob_toggle(request, id):
     object.save()
     return HttpResponseRedirect(reverse('dailyjob_list'))
 
-def dailyjob_done(request, id=None, date=None, tid=None, n=None, template_name="jobapp/dailyjob_tickform.html"):
+def dailyjob_done(request, year=None, month=None, day=None, id=None, date=None, tid=None, n=None, template_name="jobapp/dailyjob_tickform.html"):
     try:
         object = DailyJob.objects.published().get(pk=id, user=request.user)        
     except DailyJob.DoesNotExist:
         raise Http404
-    if date == "today":
+    if date is None and year is not None and month is not None and day is not None:
+        date = datetime.datetime(year=int(year), month=int(month), day=int(day))
+    elif date == "today":
+        date = datetime.datetime.today().date()
+        
+    if date is not None:
         if n is None:
             n = object.n
-        tick, c = DailyJobTick.objects.get_or_create(job = object, date=datetime.datetime.today())
+        tick, c = DailyJobTick.objects.get_or_create(job = object, date=date)
         tick.done = n
         tick.save() 
         #object.dailyjobtick_set.create(done=object.n, date=datetime.datetime.today())

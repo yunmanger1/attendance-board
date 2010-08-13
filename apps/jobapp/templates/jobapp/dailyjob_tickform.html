@@ -3,7 +3,6 @@
 {% load i18n uni_form %}
 
 {% block jsblock %}
-<link rel="stylesheet" href="{{MEDIA_URL}}static_media/jscss/dateinput.css" type="text/css" />
 {{ block.super }}
 {% endblock %}
 
@@ -13,8 +12,4 @@
 {{ form|as_uni_form }}
 <input type="submit" value="{{_("done")}}">
 </form>
-
-<script>
-$('input.dateinput').dateinput({format: 'yyyy-mm-dd'});
-</script>
 {% endblock %}

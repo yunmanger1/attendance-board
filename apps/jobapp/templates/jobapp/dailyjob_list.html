@@ -1,5 +1,7 @@
 {% extends "jobapp/base.html" %}
 
+{% load uni_form %}
+
 {% block jsblock %}
 {{ block.super }}
 <script>
@@ -30,10 +32,18 @@ $('div.handle').each(function(){
 {% endblock %}
 
 {% block content %}
-<!-- <h1>{{_("daily jobs")}}</h1>  -->
 <a class="btn btn-add" href="{% url dailyjob_add %}" title="{{_("Add new everyday job")}}">{{_("add dailyjob")}}</a> |
 <a class="btn btn-go" title="{{_("My daily jobs statistics")}}">{{_("total statistics")}}</a>
 
+<form method="post" onChange="submit();">
+{% csrf_token %}
+<h1 id="cur_date">{{_("date")}} {{date|date:"Y-m-d"}}</h1> <a href="javascript:{void();}" onclick="javascript:{$('#cur_date').hide();$('div#date_input').show();}">{{_("edit")}}</a>
+<div id="date_input" class="hidden">
+<input id="id_date" type="text" class="dateinput" value="{{date|date:"Y-m-d"}}" name="date" />
+<br/>
+<input type="button" onClick="javascript:{$('#cur_date').show();$('div#date_input').hide();}" value="{{_("cancel")}}"><input type="submit" value="{{_("go")}}">
+</div> 
+</form>
 <div style="padding-top:10px;">
 {% if not object_list %}
 <h2>{{_("you don't have any daily jobs yet. ")}}</h2>
