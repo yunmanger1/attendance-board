@@ -339,8 +339,10 @@ hr{border:1px dashed #eee;margin:10px;}
  <ul>
  <li {% if curpage == "daily" %}class='selected'{% endif %}><a href="{% url dailyjob_list %}">{{_("daily jobs")}}</a></li>
  <li {% if curpage == "stat" %}class='selected'{% endif %}><a href=''>{{_("statistics")}}</a></li>
+ <!-- 
  <li {% if curpage == "groups" %}class='selected'{% endif %}><a href=''>{{_("groups")}}</a></li>
  <li {% if curpage == "jobs" %}class='selected'{% endif %}><a href=''>{{_("tasks")}}</a></li>
+  -->
  <li {% if curpage == "settings" %}class='selected'{% endif %}><a href=''>{{_("settings")}}</a></li>
  <li >{% if user.is_authenticated %}<a href='/accounts/logout/'>{{_("Log out")}}</a>{% else %}<a href='/accounts/login/'>{{_("Log in")}}</a>{% endif%}</li>
  <li style="background-color:green;"><a href='/accounts/invite/'>{{_("Invite a friend")}}</a></li>
