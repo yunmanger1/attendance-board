@@ -3,8 +3,8 @@
 <div><font size=3><a href="{{ object.stat_link }}">{{ object }}</a></font>
 <div class="handle bullet btn-plus" ref="{{ object.pk }}" href="{{ object.stat_link }}">&nbsp;</div>
 {% with object|get_tick_for:date as tick %}
-<a class="bullet btn-green fr {% if tick.done > 0 %}chosen{% endif %}" href="{% url dailyjob_done_dated year=date.year month=date.month day=date.day id=object.pk %}" title="{{_("done for today")}}">&nbsp;</a> 
-<a class="bullet btn-red fr {% if tick.done == 0 %}chosen{% endif %}" href="{% url dailyjob_done_n_dated year=date.year month=date.month day=date.day id=object.pk n=0 %}" title="{{_("not done")}}">&nbsp;</a>
+<a class="bullet btn-green fr {% if tick.done > 0 %}chosen{% endif %}" href="{% url dailyjob_done_dated year=date.year month=date.month day=date.day id=object.pk %}?next={{curpath}}" title="{{_("done for today")}}">&nbsp;</a> 
+<a class="bullet btn-red fr {% if tick.done == 0 %}chosen{% endif %}" href="{% url dailyjob_done_n_dated year=date.year month=date.month day=date.day id=object.pk n=0 %}?next={{curpath}}" title="{{_("not done")}}">&nbsp;</a>
 {% endwith %}
 </div>
 <div id="itemdet-{{ object.pk }}" class="itemdet">

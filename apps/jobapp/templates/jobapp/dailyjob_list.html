@@ -35,7 +35,7 @@ $('div.handle').each(function(){
 <a class="btn btn-add" href="{% url dailyjob_add %}" title="{{_("Add new everyday job")}}">{{_("add dailyjob")}}</a> |
 <a class="btn btn-go" title="{{_("My daily jobs statistics")}}">{{_("total statistics")}}</a>
 
-<form method="post" onChange="submit();">
+<form method="post">
 {% csrf_token %}
 <h1 id="cur_date">{{_("date")}} {{date|date:"Y-m-d"}}</h1> <a href="javascript:{void();}" onclick="javascript:{$('#cur_date').hide();$('div#date_input').show();}">{{_("edit")}}</a>
 <div id="date_input" class="hidden">

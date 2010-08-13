@@ -27,7 +27,7 @@ def dailyjob_list(request, year=None, month=None, day=None, template_name="jobap
             return HttpResponseRedirect(reverse('dailyjob_list_dated',kwargs={'year': d.year, 'month': d.month, 'day': d.day}))
     else:
         form = DateForm(initial={'date': date})
-    c = RequestContext(request, {'object_list' : list, 'curpage': 'daily', 'date_form': form, 'date': date })
+    c = RequestContext(request, {'curpath':request.path, 'object_list' : list, 'curpage': 'daily', 'date_form': form, 'date': date })
     return render_to_response(template_name, c)
 
 
@@ -72,15 +72,16 @@ def dailyjob_done(request, year=None, month=None, day=None, id=None, date=None, 
         date = datetime.datetime(year=int(year), month=int(month), day=int(day))
     elif date == "today":
         date = datetime.datetime.today().date()
-        
+    next = request.GET.get('next',request.POST.get('next',reverse('dailyjob_list')))
     if date is not None:
         if n is None:
             n = object.n
         tick, c = DailyJobTick.objects.get_or_create(job = object, date=date)
         tick.done = n
+        print tick.done, tick.date
         tick.save() 
         #object.dailyjobtick_set.create(done=object.n, date=datetime.datetime.today())
-        return HttpResponseRedirect(reverse('dailyjob_list'))
+        return HttpResponseRedirect(next)
     else:
         try:
             tick = DailyJobTick.objects.get(job = object, pk=tid)
@@ -90,10 +91,10 @@ def dailyjob_done(request, year=None, month=None, day=None, id=None, date=None, 
             form = DailyJobTickForm(request.POST, instance=tick)
             if form.is_valid():
                 s = form.save(job=object)
-                return HttpResponseRedirect(reverse('dailyjob_list'))
+                return HttpResponseRedirect(next)
         else:
             form = DailyJobTickForm(instance=tick)
-        c = RequestContext(request, {'form' : form, 'curpage': 'daily'})
+        c = RequestContext(request, {'form' : form, 'curpage': 'daily', 'curpath':request.path})
         return render_to_response(template_name, c)
     
 def dailyjob_tickarch(request, id=None, template_name="jobapp/dailyjob_ticklist.html", **kw):
