@@ -3,14 +3,16 @@ import random
 import time
 
 from django.conf import settings
-from capi.models import ApiUser
+#from capi.models import ApiUser
+
+#UserField = models.get_model('common','usermodel')
+
 
 alfa = 'abcdefghijklmnopqrstuvwxyz1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZ'
 
 def generate_sso_token(id, timestamp):
-    api_u = ApiUser.objects.get(user__pk=id)
-#    token = "%s%s%s" % (id, timestamp, settings.SSO_SECRET)
-    token = "%s%s%s" % (id, timestamp, api_u.secret_key)
+#    api_u = ApiUser.objects.get(user__pk=id)
+    token = "%s%s%s" % (id, username, password)
     md5 = hashlib.md5()
     md5.update(token)
     return md5.hexdigest()

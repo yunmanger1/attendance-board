@@ -107,6 +107,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'sso.middleware.SingleSignOnMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -149,6 +150,7 @@ INSTALLED_APPS = (
     
     'jobapp',
     'common',
+    'sso',
 )
 
 try:

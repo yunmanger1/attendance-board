@@ -13,5 +13,6 @@ import datetime
 @login_required
 def index(request, template_name="jobapp/mobile/index.xml"):
     list = request.user.dailyjob_set.published()
-    c = RequestContext(request, {'dailyjob_list' : list, 'user': request.user })
+    date = datetime.datetime.today().date()
+    c = RequestContext(request, {'dailyjob_list' : list, 'user': request.user, 'date' :date})
     return render_to_response(template_name, c, mimetype="application/xml")

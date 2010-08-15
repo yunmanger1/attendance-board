@@ -1,5 +1,5 @@
 from django.shortcuts import render_to_response, get_object_or_404
-from django.http import Http404, HttpResponseRedirect
+from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.core.urlresolvers import reverse
@@ -63,7 +63,7 @@ def dailyjob_toggle(request, id):
     object.save()
     return HttpResponseRedirect(reverse('dailyjob_list'))
 
-def dailyjob_done(request, year=None, month=None, day=None, id=None, date=None, tid=None, n=None, template_name="jobapp/dailyjob_tickform.html"):
+def dailyjob_done(request, year=None, month=None, day=None, id=None, date=None, tid=None, n=None, type='pc', template_name="jobapp/dailyjob_tickform.html"):
     try:
         object = DailyJob.objects.published().get(pk=id, user=request.user)        
     except DailyJob.DoesNotExist:
@@ -78,9 +78,9 @@ def dailyjob_done(request, year=None, month=None, day=None, id=None, date=None, 
             n = object.n
         tick, c = DailyJobTick.objects.get_or_create(job = object, date=date)
         tick.done = n
-        print tick.done, tick.date
         tick.save() 
         #object.dailyjobtick_set.create(done=object.n, date=datetime.datetime.today())
+        if type == 'mobile': return HttpResponse("OK")
         return HttpResponseRedirect(next)
     else:
         try:

@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <description>
-	<user>
-		<username>{{ user.username }}</username>
-	</user>
+    <date>
+        <year>{{ date|date:"Y" }}</year>
+        <month>{{ date|date:"m" }}</month>
+        <day>{{ date|date:"d" }}</day>
+    </date>
 	<dailyjobs>
 	{% for object in dailyjob_list %}
 		<dailyjob>
+			<id>{{ object.pk }}</id>
 			<title>{{ object.title }}</title>
 			<text>{{ object.text }}</text>
 			<n>{{ object.n }}</n>
-			<importance>{{ object.imprtance }}</importance>
+			<importance>{{ object.importance }}</importance>
+			{% with object.get_today as tick %}
+			<is_done>{% if tick %}true{% else %}false{% endif %}</is_done>
+			{% if tick %}
+			<done>{{ tick.done }}</done>
+			{% endif %}
+			{% endwith %}
 		</dailyjob>
 	{% endfor %}
 	</dailyjobs>

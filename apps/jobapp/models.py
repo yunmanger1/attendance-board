@@ -34,6 +34,14 @@ class DailyJob(models.Model):
     
     class Meta:
         ordering = ('-is_on','-importance','-pub_date','title')
+
+    def get_today(self):
+        today = datetime.datetime.today().date()
+        try:
+            return self.dailyjobtick_set.filter(date=today)[0]
+        except:
+            pass
+        return None
         
     @models.permalink
     def del_link(self):
