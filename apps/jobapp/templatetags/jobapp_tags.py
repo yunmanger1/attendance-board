@@ -13,3 +13,12 @@ def get_tick_for(job, date):
     except:
         return None
 get_tick_for.is_safe = True
+
+@register.filter
+def get_latest_ticks(job):
+    try:
+        return job.dailyjobtick_set.published().order_by("-date")[:3]
+    except:
+        return ()
+get_tick_for.is_safe = True
+

@@ -57,6 +57,11 @@ class DailyJob(models.Model):
     
     def __unicode__(self):
         return self.title
+
+class DailyJobTickManager(models.Manager):
+
+    def published(self):
+        return self.get_query_set().filter(job__is_deleted=False, job__is_on=True)
     
 class DailyJobTick(models.Model):
     job         = models.ForeignKey(DailyJob)
@@ -64,9 +69,11 @@ class DailyJobTick(models.Model):
     date        = models.DateField()
     #TODO: check if auto_now_add is right
     pub_date    = models.DateTimeField(auto_now_add=True)
+    objects     = DailyJobTickManager()
     
     class Meta:
         unique_together= ('job', 'date',)
+        ordering = ('job', '-date')
         
     @models.permalink
     def edit_link(self):

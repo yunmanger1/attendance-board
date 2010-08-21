@@ -1,24 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
+{% load jobapp_tags %}
 <description>
     <date>
         <year>{{ date|date:"Y" }}</year>
         <month>{{ date|date:"m" }}</month>
         <day>{{ date|date:"d" }}</day>
     </date>
-	<dailyjobs>
+	<dailyjobs n="{{ dailyjob_list.count }}">
 	{% for object in dailyjob_list %}
 		<dailyjob>
 			<id>{{ object.pk }}</id>
 			<title>{{ object.title }}</title>
 			<text>{{ object.text }}</text>
 			<n>{{ object.n }}</n>
-			<importance>{{ object.importance }}</importance>
-			{% with object.get_today as tick %}
-			<is_done>{% if tick %}true{% else %}false{% endif %}</is_done>
-			{% if tick %}
-			<done>{{ tick.done }}</done>
-			{% endif %}
-			{% endwith %}
+            <n>{{ object.importance }}</n>
+              {% with object|get_latest_ticks as ticks %}
+            <latest_ticks n="{{ ticks.count }}">
+                {% for tick in ticks %}
+                <tick>
+                    <id>{{ tick.pk }}</id>
+                    <job_id>{{ tick.job.pk }}</job_id>
+                    <done>{{ tick.done }}</done>
+                    <date>
+                        <year>{{ tick.date|date:"Y" }}</year>
+                        <month>{{ tick.date|date:"m" }}</month>
+                        <day>{{ tick.date|date:"d" }}</day>
+                    </date>
+                </tick>
+                {% endfor %}
+            </latest_ticks>
+              {% endwith %}
 		</dailyjob>
 	{% endfor %}
 	</dailyjobs>
