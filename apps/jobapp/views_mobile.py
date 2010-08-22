@@ -11,8 +11,11 @@ from jobapp.models import DailyJob, DailyJobTick, Job, JobGroup
 import datetime
 
 @login_required
-def index(request, template_name="jobapp/mobile/index.xml"):
+def index(request, year=None, month=None, day=None, template_name="jobapp/mobile/index.xml"):
     list = request.user.dailyjob_set.published()
-    date = datetime.datetime.today().date()
+    if year and month and day:
+        date = datetime.datetime(year=int(year), month=int(month), day=int(day))
+    else:
+        date = datetime.datetime.today().date()
     c = RequestContext(request, {'dailyjob_list' : list, 'user': request.user, 'date' :date})
     return render_to_response(template_name, c, mimetype="application/xml")
