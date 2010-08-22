@@ -61,7 +61,7 @@ class DailyJob(models.Model):
 class DailyJobTickManager(models.Manager):
 
     def published(self):
-        return self.get_query_set().filter(job__is_deleted=False, job__is_on=True)
+        return self.get_query_set().filter(job__is_deleted=False)
     
 class DailyJobTick(models.Model):
     job         = models.ForeignKey(DailyJob)
