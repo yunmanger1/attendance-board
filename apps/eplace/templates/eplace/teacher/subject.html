@@ -1,0 +1,68 @@
+{% load eplace_tags uni_form %}
+<table class="group-table" cellpadding="0" cellspacing="0">
+<tr>
+	<th>Name</th>
+	{% for lesson in lessons %}
+	<th title="Lesson is on {{ lesson.date|date:"d b Y" }} for {{ lesson.hours }} hours">{{ lesson.date|date:"d" }}</th>
+	{% endfor %}
+</tr>
+<tr>
+<td></td>
+	{% for lesson in lessons %}
+<td><a id="ap-handle" rel="tick-{{ lesson.pk }}" onClick="return false;" title="{{_("all present")}}">
+	<img src="{{MEDIA_URL}}static_media/images/bullet_add.png" height=16 width=16 />
+	</a></td>
+	{% endfor %}
+
+</tr>
+{% with group.student_set.all as object_list %}
+{% for object in object_list %}
+<tr>
+	<td><a href="{{ object.link }}">{{ object }}</a></td>
+	{% for lesson in lessons %}
+	<td class="tick" id="tick-{{ lesson.pk }}" title="{{ object }}
+	{% with lesson|get_tick:object as tick %}{% if tick %}Ticked on {{ tick.pub_date|date:"d b Y" }}.{% endif%}{% endwith %}" rel="{{ lesson.pk }}:{{ object.pk }}">{{ lesson|get_tick_display:object }}</td>
+	{% endfor %}
+</tr>
+{% endfor %}
+{% endwith %}
+<tr>
+	<td></td>
+	{% for lesson in lessons %}
+	<td><a href="{{ lesson.del_link }}" id="del-lesson-day" onClick="return false;" title="Delete lesson day">
+	<img src="{{MEDIA_URL}}static_media/images/bullet_delete.png" height=16 width=16 />
+	</a></td>
+	{% endfor %}
+</tr>
+</table>
+
+<div class="hidden">
+<form method="post" action="{% url eplace_teacher_tick_save %}" id="tick-form">
+{% csrf_token %}
+<input type='text' name="group" value="{{ group.pk }}">
+<input type='text' name="subject" value="{{ subject.pk }}">
+<input type='text' id="tick0" name="tick" value="12">
+</form>
+</div>
+
+<div id="lesson-day-form" class="hidden popup">
+<form method="post" action="{% url eplace_teacher_subject_group sid=subject.pk gid=group.pk %}">
+{% csrf_token %}
+{{ lesson_form|as_uni_form }}
+<input type="button" onClick="teacher.addLD();" value="add" />
+<input type="button" onClick="teacher.ldApi.overlay().close();" value="cancel"/>
+<br/>
+<tt>Press Esc to close.</tt>
+</form>
+</div>
+
+<div id="generate-lesson-day-form" class="hidden popup">
+<form method="post" action="{% url eplace_teacher_generate_ld sid=subject.pk gid=group.pk %}">
+{% csrf_token %}
+{{ glf_form|as_uni_form }}
+<input type="button" onClick="teacher.genLD();" value="generate" />
+<input type="button" onClick="teacher.gldApi.overlay().close();" value="cancel"/>
+<br/>
+<tt>Press Esc to close.</tt>
+</form>
+</div>

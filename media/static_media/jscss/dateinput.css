@@ -7,17 +7,18 @@
 	font-size:18px;
 	padding:4px;
 	text-align:center;
-	width:194px;		
+	width:210px;		
 	-moz-box-shadow:0 0 10px #eee inset;
 }
 
 /* calendar root element */
 #calroot {
 	/* place on top of other elements. set a higher value if nessessary */
-	z-index:1;
+	z-index:20;
 	
 	margin-top:-1px;
-	width:198px;
+#	width:198px;
+	width:210px;
 	padding:2px;
 	background-color:#fff;
 	font-size:11px;
@@ -96,7 +97,7 @@
 .calweek a {
 	display:block;
 	float:left;
-	width:27px;
+	width:23px;
 	height:20px;
 	text-decoration:none;
 	font-size:11px;

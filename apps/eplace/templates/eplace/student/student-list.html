@@ -1,0 +1,14 @@
+<table cellpadding="0" cellspacing="0" class="group-table">
+<tr>
+<th>{{_("name")}}</th>
+<th>{{_("group")}}</th>
+<th>{{_("email")}}</th>
+</tr>
+{% for object in object_list %}
+<tr>
+<td><a href="{{ object.link }}">{{ object }}</a></td>
+<td>{{ object.group }}</td>
+<td>{{ object.email }}</td>
+</tr>
+{% endfor %}
+</table>

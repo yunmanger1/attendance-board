@@ -5,8 +5,12 @@
 <META name="robots" content="follow, all">
 <META name="language" content="ru, kz, en, tr">
 <LINK rel="shortcut icon" href="/media/static_media/styles/andreas/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="{{MEDIA_URL}}static_media/jscss/jquery.jgrowl.css" type="text/css" />
 <SCRIPT type="text/javascript" src="{{MEDIA_URL}}static_media/jscss/jquery.js"></SCRIPT>
 <SCRIPT type="text/javascript" src="{{MEDIA_URL}}static_media/jscss/jquery.tools.min.js"></SCRIPT>
+<!-- <script src="http://cdn.jquerytools.org/1.2.4/all/jquery.tools.min.js"></script> -->
+<script type="text/javascript" src="{{MEDIA_URL}}static_media/jscss/jquery.jgrowl_compressed.js"></script>
+
 <script>
 function change_language_to(lang){
 	$(".lang-form").find("input[name='language']").val(lang);
@@ -327,7 +331,7 @@ hr{border:1px dashed #eee;margin:10px;}
 <b id='Header1' type='Header'>
 <b id='main'>
     <h1 class='title'>
-       <a href='/'><img src="/media/static_media/styles/andreas/logo.png"></a> Watchme
+       <a href='/'><img src="/media/static_media/styles/andreas/logo.png"></a> Attendance Board
     </h1>
     <h2>{{_("few smart words in here")}}</h2>
 </b>
@@ -337,15 +341,14 @@ hr{border:1px dashed #eee;margin:10px;}
  
  <div id='navigation'>
  <ul>
- <li {% if curpage == "daily" %}class='selected'{% endif %}><a href="{% url dailyjob_list %}">{{_("daily jobs")}}</a></li>
- <li {% if curpage == "stat" %}class='selected'{% endif %}><a href=''>{{_("statistics")}}</a></li>
+ <li {% if curpage == "teachers" %}class='selected'{% endif %}><a href="{% url eplace_teacher_index %}">{{_("teachers")}}</a></li>
+ <li {% if curpage == "supervisers" %}class='selected'{% endif %}><a href=''>{{_("supervisers")}}</a></li>
+ <li {% if curpage == "deans" %}class='selected'{% endif %}><a href=''>{{_("deans")}}</a></li>
  <!-- 
- <li {% if curpage == "groups" %}class='selected'{% endif %}><a href=''>{{_("groups")}}</a></li>
  <li {% if curpage == "jobs" %}class='selected'{% endif %}><a href=''>{{_("tasks")}}</a></li>
   -->
- <li {% if curpage == "settings" %}class='selected'{% endif %}><a href=''>{{_("settings")}}</a></li>
+ <li {% if curpage == "settings" %}class='selected'{% endif %}><a href="{% url eplace_settings %}">{{_("settings")}}</a></li>
  <li >{% if user.is_authenticated %}<a href='/accounts/logout/'>{{_("Log out")}}</a>{% else %}<a href='/accounts/login/'>{{_("Log in")}}</a>{% endif%}</li>
- <li style="background-color:green;"><a href='/accounts/invite/'>{{_("Invite a friend")}}</a></li>
 <div style="float:right;">
 {% for lang in LANGUAGES %}
 <li {% if LANGUAGE_CODE == lang.0 %}class='selected'{% endif %}><a href="javascript:{void(0);}" onclick="change_language_to('{{lang.0}}');" javascript><img src="/media/static_media/images/{{lang.0}}.png" />{{lang.0}}</a></li>

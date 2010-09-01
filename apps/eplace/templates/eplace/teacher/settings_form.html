@@ -1,0 +1,5 @@
+{% load uni_form %}
+<h2>Settings</h2>
+<form id="settings-form" method="POST" action="{% url eplace_settings_save %}">
+{{ form|as_uni_form }}
+</form>

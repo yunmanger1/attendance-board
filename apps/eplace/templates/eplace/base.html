@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block jsblock %}
+<style>
+.widget-container{
+display:block;
+width: 100%;
+}
+.widget{
+display:block;
+border: 4px solid #ccc;
+padding: 5px;
+}
+.widget a{
+padding: 2px;
+display:inline-block;
+cursor: pointer;
+}
+.widget a.selected{
+background-color: #eee;
+border:2px solid #ccc;
+}
+.w-group{
+width: 150px;
+}
+.w-subject{
+width: 300px;
+}
+.w-table{
+width: 475px;
+overflow: auto;
+}
+.group-table, .group-table td, .group-table th {
+border: 1px solid black;
+}
+.group-table td, .group-table th{
+font-size: 10px;
+padding: 3px;
+}
+td.tick{
+text-align: center;
+cursor:pointer;
+}
+td.changed{background-color: yellow;}
+
+div.popup{
+padding:10px;
+background-color: #eee;
+width: 300px;
+border: 3px solid #ccc;
+}
+</style>
+{% endblock %}

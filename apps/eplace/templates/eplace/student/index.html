@@ -1,0 +1,40 @@
+{% extends "eplace/base.html" %}
+
+{% block jsblock %}
+{{ block.super }}
+<script>
+{% include "eplace/common.js" %}
+{% include "eplace/student/student.js" %}
+$(document).ready(function(){
+	$('a#filter-go').click(function(){
+		var val = $('input#filter-input').val();
+		student.filter(val);
+	});
+	$('a#filter-reset').click(function(){
+		$('input#filter-input').val('');
+		student.reset();
+	});
+	student.getList();
+});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="hidden w-loading"><img src="{{MEDIA_URL}}static_media/images/upload.gif"/></div>
+<div class="widget">
+{{_("filter")}}: <input id="filter-input" type="text" value="" />
+<a id="filter-go">{{_("go")}}</a>
+<a id="filter-reset">{{_("reset")}}</a>
+</div>
+<div class="widget">
+<a onClick="student.prev();">&larr; {{_("previous")}}</a>
+<input id="page-input" onChange="student.reset();" type="text" size="1" value="{% if page %}{{ page }}{% else %}1{% endif %}">
+<a onClick="student.next();">{{_("next")}} &rarr;</a>
+{% csrf_token %}
+</div>
+<div class="widget w-table">
+{# {% include "eplace/student/student-list.html" %} #}
+</div>
+<div class="widget">
+</div>
+{% endblock %}

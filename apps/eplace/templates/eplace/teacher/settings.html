@@ -1,0 +1,23 @@
+{% extends "eplace/base.html" %}
+
+{% block jsblock %}
+{{ block.super }}
+<link rel="stylesheet" href="{{MEDIA_URL}}static_media/jscss/dateinput.css" type="text/css" />
+<script>
+{% include "eplace/teacher/teacher_settings.js" %}
+	$(document).ready(function(){
+	});
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="widget-container">
+<div class="hidden w-loading"><img src="{{MEDIA_URL}}static_media/images/upload.gif"/></div>
+<div class="widget w-table">
+{% include "eplace/teacher/settings_form.html" %}
+</div>
+<div class="widget">
+<a onClick="teacher.reset();" rel="{% url eplace_settings_get %}">Reset</a> | <a onClick="teacher.save();" rel="{% url eplace_settings_save %}">Save</a> 
+</div>
+</div>
+{% endblock %}

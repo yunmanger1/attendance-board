@@ -23,9 +23,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'watchme',                      # Or path to database file if using sqlite3.
-        'USER': 'watchme',                      # Not used with sqlite3.
-        'PASSWORD': 'watchme',                  # Not used with sqlite3.
+        'NAME': 'atboard',                      # Or path to database file if using sqlite3.
+        'USER': 'atboard',                      # Not used with sqlite3.
+        'PASSWORD': 'atboard',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
@@ -62,7 +62,7 @@ USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '/home/german/work/media/watchme/'
+MEDIA_ROOT = '/home/german/work/media/atboard/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -79,13 +79,13 @@ SECRET_KEY = 'x7+2eb0f2zd_to48j11jrrk*j*bm_4k$%w%(%h0_1f-33mdrd*'
 
 #email stuff
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'watchme.kz@gmail.com'
+EMAIL_HOST_USER = 'atboard.kz@gmail.com'
 EMAIL_HOST_PASSWORD = 'damnsimple'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_SUBJECT_PREFIX = '[watchme.kz] '
-SERVER_EMAIL = 'no-reply@watchme.kz'
-DEFAULT_FROM_EMAIL = 'no-reply@watchme.kz'
+EMAIL_SUBJECT_PREFIX = '[atboard.kz] '
+SERVER_EMAIL = 'no-reply@atboard.kz'
+DEFAULT_FROM_EMAIL = 'no-reply@atboard.kz'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
@@ -101,13 +101,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 "django.core.context_processors.i18n",
 "django.core.context_processors.media",
 "django.contrib.messages.context_processors.messages",
-'django.core.context_processors.i18n',
 )
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'sso.middleware.SingleSignOnMiddleware',
+#    'sso.middleware.SingleSignOnMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -116,7 +115,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
 )
 
-ROOT_URLCONF = 'watchme.urls'
+ROOT_URLCONF = 'atboard.urls'
 
 TEMPLATE_DIRS = (
     rel('templates'),
@@ -139,7 +138,7 @@ INSTALLED_APPS = (
     'django-backup',
 #    'tagging',
     'south',
-    'sorl.thumbnail',
+#    'sorl.thumbnail',
 #    'basic.inlines',
 #    'photologue',
 #    'haystack',
@@ -148,10 +147,22 @@ INSTALLED_APPS = (
     'registration',
     'invitation',
     
-    'jobapp',
+    'eplace',
     'common',
-    'sso',
+#    'sso',
 )
+
+DEANS_GROUP = 'Deans'
+TEACHERS_GROUP = 'Teachers'
+SUPERVISERS_GROUP = 'Supervisers'
+ABSENCE_PERCENTAGE_LIMIT = 20
+TICK_VALUES = (
+    (-2, 'L', 'Late'),
+    (-1, 'I', 'Ill'),
+    (0, '-', 'Absent'),
+    (1, '+', 'Attended'),
+)
+ABSENCE_VALUES = (-1, 0,)
 
 try:
     from local_settings import *
@@ -173,5 +184,5 @@ INVITATIONS_PER_USER = 50
 # we need this for registration stuff
 REQUIRE_EMAIL_CONFIRMATION = True
 ACCOUNT_ACTIVATION_DAYS = ACCOUNT_INVITATION_DAYS
-LOGIN_REDIRECT_URL = '/ja/daily/'
+LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/accounts/login/'
