@@ -2,7 +2,7 @@ from django.contrib import admin
 from django import forms
 from django.forms.formsets import formset_factory
 from eplace.models import Faculty, Group, Student, Subject, Superviser, Teacher
-from eplace.models import Dean, GenerateLessonDay, LessonDay
+from eplace.models import Dean, GenerateLessonDay, LessonDay, Lesson
 
 #class PostAdmin(admin.ModelAdmin):
 #    list_display  = ('title', 'pub_date')
@@ -61,3 +61,5 @@ admin.site.register(Teacher)
 admin.site.register(Dean, DeanAdmin)
 admin.site.register(GenerateLessonDay, GenerateLessonDayAdmin)
 admin.site.register(LessonDay)
+admin.site.register(Lesson)
+

@@ -37,7 +37,7 @@ def get(request, template_name="eplace/student/index.html", limit=50):
         c = RequestContext(request, {'object_list' : list})
         return json_response("OK", render_to_string("eplace/student/student-list.html", c))
     list = list[(page-1)*limit:page*limit]
-    c = RequestContext(request, {'object_list' : list})
+    c = RequestContext(request, {'object_list' : list,'curpage':'student'})
     return render_to_response(template_name, c)
 #    return json_response("ERROR")
 

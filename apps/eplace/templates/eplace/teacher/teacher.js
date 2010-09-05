@@ -4,15 +4,16 @@ $.tools.dateinput.localize("{{LANGUAGE_CODE}}", {
    days:         '{{_("Sunday")}},{{_("Monday")}},{{_("Tuesday")}},{{_("Wednesday")}},{{_("Thursday")}},{{_("Friday")}},{{_("Saturday")}}',
    shortDays:    '{{_("Sun")}},{{_("Mon")}},{{_("Tue")}},{{_("Wed")}},{{_("Thu")}},{{_("Fri")}},{{_("Sat")}}'
 });
+var msg = {
+	notSelected: 'Lesson is not selected!',
+};
 var teacher = {
 	lang: 'en',
 	debug: true, 
-	group: '',
-	subject: '',
-	urlname: 'eplace_teacher_subject_group',
+	lesson: '',
+	urlname: 'eplace_teacher_lesson',
 	url: null, 
-	groups: {},
-	subjects: {},
+	lessons: {},
 	loadSuccess: false, 
 	loadPage: null,
 	alert: null,
@@ -185,7 +186,7 @@ teacher.getClonedInput = function(){
 	return teacher.clonedInput;
 }
 teacher.save = function(){
-	if (teacher.group != '' && teacher.subject != ''){
+	if (teacher.lesson != ''){
 		teacher.getClonedInput();
 		$(teacher.form).find('input[name=tick]').remove('');
 		$('td.tick').filter('.changed').each(function(){
@@ -206,14 +207,14 @@ teacher.save = function(){
 //			teacher.loadPage();
 		});
 	}else{
-		teacher.alert('Subject and group are not selected!');
+		teacher.alert(msg.notSelected);
 	}
 };
 teacher.reset = function(){
-	if (teacher.group != '' && teacher.subject != ''){
+	if (teacher.lesson != ''){
 		teacher.loadPage();
 	}else{
-		teacher.alert('Subject and group are not selected!');
+		teacher.alert(msg.notSelected);
 	}
 };
 teacher.alert = function(m){
@@ -232,54 +233,27 @@ teacher.showLoading = function(s){
 		$('div.w-loading').hide();
 	}
 };
-teacher.groups.select = function(o){
+teacher.lessons.select = function(o){
 	$(o).addClass('selected');
-	teacher.group = $(o).attr('rel');
+	teacher.lesson= $(o).attr('rel');
 	teacher.loadSuccess = false;
-	if (teacher.group != '' && teacher.subject != ''){
-		teacher.loadPage();
-	}
+	teacher.loadPage();
 }
-teacher.groups.deselect = function(o){
+teacher.lessons.deselect = function(o){
 	$(o).removeClass('selected');
 	teacher.group = '';
 }
-teacher.groups.deselectAll = function(){
-	$('div.w-group').find('a').each(function(){
-		teacher.groups.deselect(this);
-	});
-}
-teacher.subjects.select = function(o){
-	$(o).addClass('selected');
-	teacher.subject = $(o).attr('rel');
-	teacher.loadSuccess = false;
-	if (teacher.group != '' && teacher.subject != ''){
-		teacher.loadPage();
-	}
-}
-teacher.subjects.deselect = function(o){
-	$(o).removeClass('selected');
-	teacher.subject = '';
-}
-teacher.subjects.deselectAll = function(){
+teacher.lessons.deselectAll = function(){
 	$('div.w-subject').find('a').each(function(){
-		teacher.subjects.deselect(this);
+		teacher.lessons.deselect(this);
 	});
 }
 teacher.loadPage = function(){
-//	if (teacher.url == null){
-		teacher.getUrl(teacher.urlname,'sid='+teacher.subject+'&gid='+teacher.group, function(url){
-			teacher.sendAjaxRequest("GET",url, null, function(json){
-				teacher.newHtml(json.html);
-				teacher.loadSuccess = true;
-				teacher.alert('Successful load!');
-			});
+	teacher.getUrl(teacher.urlname,'lid='+teacher.lesson, function(url){
+		teacher.sendAjaxRequest("GET",url, null, function(json){
+			teacher.newHtml(json.html);
+			teacher.loadSuccess = true;
+			teacher.alert('Successful load!');
 		});
-//	}else{
-//		teacher.sendAjaxRequest("GET",teacher.url, null, function(json){
-//			teacher.newHtml(json.html);
-//			teacher.loadSuccess = true;
-//			teacher.alert('Successful load!');
-//		});
-//	}
+	});
 }

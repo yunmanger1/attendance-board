@@ -6,20 +6,12 @@
 <script>
 {% include "eplace/teacher/teacher.js" %}
 	$(document).ready(function(){
-		$('div.w-group').find('a').click(function(){
-			if ($(this).hasClass('selected')){
-				teacher.groups.deselect(this);
-			}else{
-				teacher.groups.deselectAll();
-				teacher.groups.select(this);
-			}
-		});
 		$('div.w-subject').find('a').click(function(){
 			if ($(this).hasClass('selected')){
-				teacher.subjects.deselect(this);
+				teacher.lessons.deselect(this);
 			}else{
-				teacher.subjects.deselectAll();
-				teacher.subjects.select(this);
+				teacher.lessons.deselectAll();
+				teacher.lessons.select(this);
 			}
 		});
 	});
@@ -29,6 +21,7 @@
 {% block content %}
 <div class="widget-container">
 <div>
+<!-- 
 	<div class="fr widget w-group">
 	<h2>Groups</h2>
 	{% with teacher.groups.all as object_list %}
@@ -37,11 +30,14 @@
 	{% endfor %}
 	{% endwith %}
 	</div>
+ -->	
 	<div class="widget w-subject">
-	<h2>Subjects</h2>
-	{% with teacher.subjects.all as object_list %}
+	<h2>Lessons</h2>
+	{% with teacher.lesson_set.all as object_list %}
 	{% for object in object_list %}
-	<a rel="{{ object.pk }}">{{ object }} ({{ object.short_name }})</a>
+	<a rel="{{ object.pk }}">{{ object.subject }} {{ object.type}}<br>
+	<tt>{% for group in object.groups.all %}{{group}}{% if not forloop.last %}, {% endif %}{% endfor %}</tt>
+	</a>
 	{% endfor %}
 	{% endwith %}
 	</div>

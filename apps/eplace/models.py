@@ -93,18 +93,8 @@ class Dean(models.Model):
     def __unicode__(self):
         return '{0}'.format(self.get_name())
     
-class Lesson(models.Model):
-    subject = models.ForeignKey(Subject)
-    group   = models.ForeignKey(Group)
-    
-    def __unicode__(self):
-        return u'{0} - {1}'.format(self.subject, self.group)
-    
 class Teacher(models.Model):
     user            = models.OneToOneField(User)
-    lessons         = models.ManyToManyField(SubjectGroup, null=True, blank=True)
-#    subjects        = models.ManyToManyField(Subject, null=True, blank=True)
-#    groups          = models.ManyToManyField(Group, null=True, blank=True)
     
     def get_name(self):
         return self.user.username
@@ -124,6 +114,20 @@ class Teacher(models.Model):
 
     def __unicode__(self):
         return u'{0}'.format(self.get_name())
+
+class Lesson(models.Model):
+    teacher         = models.ForeignKey(Teacher)
+    subject         = models.ForeignKey(Subject)
+    groups          = models.ManyToManyField(Group)
+    hours           = models.IntegerField(default=1)
+    week_days       = models.CharField(max_length=30, default='')
+    type            = models.CharField(max_length=15, default='')
+    
+    def __unicode__(self):
+        if self.type != '':
+            return u'{0} {1} {2}'.format(self.teacher, self.subject, self.type)
+        else:
+            return u'{0} {1}'.format(self.teacher, self.subject)
         
 class Superviser(models.Model):
     user            = models.OneToOneField(User)
@@ -150,14 +154,11 @@ class Superviser(models.Model):
 
 
 class LessonDay(models.Model):
-    teacher         = models.ForeignKey(Teacher)
-    subject         = models.ForeignKey(Subject)
-    group           = models.ForeignKey(Group)
+    lesson          = models.ForeignKey(Lesson)
     date            = models.DateField()
-    hours           = models.IntegerField(default=1)
     
     class Meta:
-        unique_together = ('date', 'group', 'subject', 'teacher')
+        unique_together = ('date', 'lesson')
         ordering = ('date',)
 
     @models.permalink
@@ -177,12 +178,10 @@ class Tick(models.Model):
         ordering = ('-pub_date',)
     
 class GenerateLessonDay(models.Model):
-    teacher         = models.ForeignKey(Teacher)
-    subject         = models.ForeignKey(Subject)
-    group           = models.ForeignKey(Group)
+    lesson          = models.ForeignKey(Lesson)
     start_date      = models.DateField()
     end_date        = models.DateField()
-    weak_days       = models.CharField(max_length=50, help_text="Separate lesson-hours using comma (,). <br>Each lesson-hour is defined by (weekday):(hours). <br>Ex: mon:4, wed:2<br>Weekdays are defined by: mon, tue, wed, thu, fri, sat, sun")
+    weak_days       = models.CharField(max_length=50, help_text="Separate lesson-days using comma (,). <br>Ex: mon, wed<br>Weekdays are defined by: mon, tue, wed, thu, fri, sat, sun")
     
     def save(self, *a, **kw):
         super(GenerateLessonDay, self).save(*a,**kw)
@@ -190,22 +189,17 @@ class GenerateLessonDay(models.Model):
         t = self.weak_days.replace(' ','').split(',')
         d = {}
         for x in t:
-            y = x.split(':')
-            k = ['mon','tue','wed','thu','fri','sat','sun'].index(y[0])
-            h = int(y[1])
-            d.update({k:h})
+            k = ['mon','tue','wed','thu','fri','sat','sun'].index(x)
+            d.update({k:self.lesson.hours})
         
         cur = self.start_date
         while cur < self.end_date:
             w = cur.weekday()
             if d.has_key(w):
                 o, c = LessonDay.objects.get_or_create(
-                     teacher=self.teacher,
-                     subject=self.subject,
-                     group=self.group,
+                     lesson=self.lesson,
                      date=cur
                 )
-                o.hours = d[w]
                 o.save()
             cur = cur.fromtimestamp(int(cur.strftime("%s"))+24*60*60)
         super(GenerateLessonDay, self).delete(*a,**kw)
