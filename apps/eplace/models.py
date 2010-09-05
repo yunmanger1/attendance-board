@@ -92,12 +92,19 @@ class Dean(models.Model):
         
     def __unicode__(self):
         return '{0}'.format(self.get_name())
-        
+    
+class Lesson(models.Model):
+    subject = models.ForeignKey(Subject)
+    group   = models.ForeignKey(Group)
+    
+    def __unicode__(self):
+        return u'{0} - {1}'.format(self.subject, self.group)
     
 class Teacher(models.Model):
     user            = models.OneToOneField(User)
-    subjects        = models.ManyToManyField(Subject, null=True, blank=True)
-    groups          = models.ManyToManyField(Group, null=True, blank=True)
+    lessons         = models.ManyToManyField(SubjectGroup, null=True, blank=True)
+#    subjects        = models.ManyToManyField(Subject, null=True, blank=True)
+#    groups          = models.ManyToManyField(Group, null=True, blank=True)
     
     def get_name(self):
         return self.user.username
@@ -117,11 +124,7 @@ class Teacher(models.Model):
 
     def __unicode__(self):
         return u'{0}'.format(self.get_name())
-    
-class SubjectGroup(models.Model):
-    subject = models.ForeignKey(Subject)
-    group   = models.ForeignKey(Group)
-    
+        
 class Superviser(models.Model):
     user            = models.OneToOneField(User)
     groups          = models.ManyToManyField(Group, null=True, blank=True)
