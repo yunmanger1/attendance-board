@@ -11,4 +11,10 @@
 <path>/home/german/distr/django-trunk</path>
 <path>/home/german/work/libs</path>
 </pydev_pathproperty>
+<pydev_variables_property name="org.python.pydev.PROJECT_VARIABLE_SUBSTITUTION">
+<key>DJANGO_MANAGE_LOCATION</key>
+<value>manage.py</value>
+<key>DJANGO_SETTINGS_MODULE</key>
+<value>atboard.settings</value>
+</pydev_variables_property>
 </pydev_project>

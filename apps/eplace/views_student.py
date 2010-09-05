@@ -3,6 +3,7 @@ from django.template.loader import render_to_string
 from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from eplace.models import is_teacher, is_dean, is_superviser
 from eplace.models import Subject, Group, LessonDay, Tick, Student
@@ -39,3 +40,14 @@ def get(request, template_name="eplace/student/index.html", limit=50):
     c = RequestContext(request, {'object_list' : list})
     return render_to_response(template_name, c)
 #    return json_response("ERROR")
+
+@req
+def student(request, id, template_name="eplace/student/student.html"):
+    try:
+        student = Student.objects.get(pk=id)
+    except Student.DoesNotExist:
+        return Http404
+    
+    
+    c = RequestContext(request, {'student': student, 'curpage': 'student'})
+    return render_to_response(template_name, c)

@@ -1,0 +1,12 @@
+{% extends "eplace/base.html" %}
+
+{% block content %}
+<div class="widget">
+<h2>{{ student }} ({{ student.group }})</h2>
+<h3>{{ student.email }}</h3>
+</div>
+
+<div class="widget">
+{{ student.subjects }}
+</div>
+{% endblock %}

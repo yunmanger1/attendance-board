@@ -48,9 +48,6 @@ class Student(models.Model):
     email           = models.EmailField(blank=True)
     info            = models.TextField(blank=True)
     
-    class Meta:
-        ordering = ('name',)
-    
     @property
     def start_year(self):
         return self.group.start_year
@@ -58,7 +55,15 @@ class Student(models.Model):
     def __unicode__(self):
         return u'{0}'.format(self.name)
     
+    @models.permalink
+    def link(self):
+        return ('eplace_students_student',None, {'id': self.pk})
+    
+    def subjects(self):
+        return self.lessonday_set.only('subject').distinct('subject')
+    
     class Meta:
+        ordering = ('name',)
         unique_together = ('name', 'group',)      
 
 
@@ -112,6 +117,10 @@ class Teacher(models.Model):
 
     def __unicode__(self):
         return u'{0}'.format(self.get_name())
+    
+class SubjectGroup(models.Model):
+    subject = models.ForeignKey(Subject)
+    group   = models.ForeignKey(Group)
     
 class Superviser(models.Model):
     user            = models.OneToOneField(User)
