@@ -169,10 +169,6 @@ try:
 except ImportError:
     pass
 
-sys.path.append(os.path.join(DISTR_DIR,"django-trunk"))
-sys.path.append(LIB_DIR)
-sys.path.append(rel('apps'))
-
 THUMBNAIL_EXTENSION = 'png'
 THUMBNAIL_DEBUG = DEBUG
 
