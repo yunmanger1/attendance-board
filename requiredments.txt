@@ -1,0 +1,7 @@
+-e svn+http://code.djangoproject.com/svn/django/trunk/#egg=django-trunk
+south
+django-robots
+django-uni-form
+django-registration
+django-invitation
+
