@@ -7,6 +7,8 @@ def rel(*x):
 def rel_to(to, *x):
     return os.path.join(to, *x)
 
+sys.path.append(rel("apps"))
+
 DISTR_DIR='/home/german/distr'
 LIB_DIR='/home/german/work/libs'
 
@@ -135,7 +137,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.sitemaps',
 
-    'django-backup',
+#    'django-backup',
 #    'tagging',
     'south',
 #    'sorl.thumbnail',
