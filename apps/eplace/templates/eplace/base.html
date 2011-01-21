@@ -16,6 +16,11 @@ padding: 2px;
 display:inline-block;
 cursor: pointer;
 }
+
+.widget a.block{
+display: block;
+}
+
 .widget a.selected{
 background-color: #eee;
 border:2px solid #ccc;
@@ -27,7 +32,7 @@ width: 150px;
 width: 300px;
 }
 .w-table{
-width: 475px;
+/*width: 100%;*/
 overflow: auto;
 }
 .group-table, .group-table td, .group-table th {
@@ -49,5 +54,31 @@ background-color: #eee;
 width: 300px;
 border: 3px solid #ccc;
 }
+
+.left{
+float:left;
+}
+
+.leftpart{
+width: 30%;
+}
+
+.mainpart{
+width: 60%;
+}
 </style>
+{% endblock %}
+
+{% block content %}
+<div class="widget-container">
+<div>
+	<div class="left leftpart">{% block leftpart %}{% endblock %}
+		
+	</div>
+	<div class="left mainpart">{% block mainpart%}{% endblock %}
+	
+	</div>
+</div>
+</div>
+
 {% endblock %}

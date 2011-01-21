@@ -2,30 +2,40 @@
 
 {% block jsblock %}
 {{ block.super }}
-<link rel="stylesheet" href="{{MEDIA_URL}}static_media/jscss/dateinput.css" type="text/css" />
+
+<style>
+.box_rotate {
+     -moz-transform: rotate(60deg);  /* FF3.5+ */
+       -o-transform: rotate(60deg);  /* Opera 10.5 */
+  -webkit-transform: rotate(60deg);  /* Saf3.1+, Chrome */
+			 filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.3);  /* IE6,IE7 */
+	     -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.3)"; /* IE8 */
+}
+</style>
+
 <script>
-{% include "eplace/teacher/teacher.js" %}
+{% include "eplace/common.js" %}
+{% include "eplace/groups/groups.js" %}
 	$(document).ready(function(){
 		$('div.w-subject').find('a').click(function(){
 			if ($(this).hasClass('selected')){
-				teacher.lessons.deselect(this);
+				groups.deselect(this);
 			}else{
-				teacher.lessons.deselectAll();
-				teacher.lessons.select(this);
+				groups.deselectAll(this);
+				groups.select(this);
 			}
 		});
-	});
+	});	
 </script>
+
 {% endblock %}
 
 {% block leftpart %}
 	<div class="widget w-subject">
-	<h2>Lessons</h2>
-	{% with teacher.lesson_set.all as object_list %}
-	{% for object in object_list %}
-	<a class="block" rel="{{ object.pk }}">{{ object.subject }} {{ object.type}}<br>
-	<tt>{% for group in object.groups.all %}{{group}}{% if not forloop.last %}, {% endif %}{% endfor %}</tt>
-	</a>
+	<h2>Groups</h2>
+	{% with superviser.groups.all as object_list %}
+	{% for object in object_list %}	
+	<a class="block" rel="{{ object.pk }}">{{ object }} </a>
 	{% endfor %}
 	{% endwith %}
 	</div>

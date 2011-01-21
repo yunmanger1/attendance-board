@@ -1,8 +1,10 @@
 import re
 from django import template
 from django.db import models
+from django.db import connection
 from django.utils import text
 from django.conf import settings
+from eplace.utils import is_dean as isdean, is_superviser as issuperviser, is_teacher as isteacher
 
 import datetime 
 
@@ -40,3 +42,18 @@ get_tick.is_safe = True
 def get_tick_display(lesson, student):
     return get_tick_d(lesson, student)
 get_tick_display.is_safe = True
+
+@register.filter
+def is_teacher(user):
+    return isteacher(user)
+    
+@register.filter    
+def is_superviser(user):
+    return issuperviser(user)
+
+@register.filter
+def is_dean(user):
+    return isdean(user)
+
+def get_absence_count(student, lesson):
+    return 0

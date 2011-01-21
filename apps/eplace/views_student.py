@@ -5,7 +5,7 @@ from django.template import RequestContext
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
-from eplace.models import is_teacher, is_dean, is_superviser
+from eplace.utils import is_teacher, is_dean, is_superviser
 from eplace.models import Subject, Group, LessonDay, Tick, Student
 from eplace.forms import SettingsForm, get_default_settings
 

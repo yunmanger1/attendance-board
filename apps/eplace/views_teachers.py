@@ -5,8 +5,8 @@ from django.template.loader import render_to_string
 from django.conf import settings
 from django.core.urlresolvers import reverse
 
-from eplace.models import is_teacher, is_dean, is_superviser, Student
-from eplace.models import Subject, Group, LessonDay, Tick, Lesson
+from eplace.utils import is_teacher, is_dean, is_superviser
+from eplace.models import Subject, Group, LessonDay, Tick, Lesson, Student
 from eplace.forms import TickForm, LessonDayForm, GenerateLessonDayForm
 from eplace.utils import json_response, getval, get_page
 
@@ -22,6 +22,11 @@ def req(f):
         return HttpResponseRedirect(reverse('eplace_index'))
     return nf
 ############## switches ###########################
+
+def index(request, template_name="eplace/teacher/index.html"):
+    teacher = request.user.teacher
+    c = RequestContext(request, {'teacher' : teacher, 'curpage': 'teachers'})
+    return render_to_response(template_name, c)
 
 @req
 def subject(request, lid, template_name="eplace/teacher/subject.html"):

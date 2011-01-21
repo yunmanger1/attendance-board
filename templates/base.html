@@ -1,4 +1,4 @@
-<!--<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns='http://www.w3.org/1999/xhtml' xmlns:b='http://www.google.com/2005/gml/b' xmlns:data='http://www.google.com/2005/gml/data' xmlns:expr='http://www.google.com/2005/gml/expr'>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <META name="distribution" content="global">
@@ -68,7 +68,8 @@ img.right{float:right; margin:0 0 5px 12px;}
 /**************** Header and navigation styles ****************/
 
 #container{
-width:760px;
+/*width:760px;*/
+width: 95%;
 margin:50px auto; 20px; 20px;
 padding:1px 0;
 text-align:left;
@@ -142,10 +143,11 @@ text-decoration:none;
 /**************** Content styles ****************/
 
 #content{
-	float:left;
-	width:500px;
+	/*float:left;*/
+	/*width: 100%;*/
+	/*width:500px;*/
 	font-size:0.9em;
-	padding:20px 0px 0 30px;
+	padding:20px 40px 0 30px;
 	text-align: justify;
 }
 #content h1{
@@ -313,6 +315,7 @@ hr{border:1px dashed #eee;margin:10px;}
   </head>
 
   <body>
+{% load eplace_tags %}
 <form class="lang-form" style="display:none"; action="/i18n/setlang/" method="post">
 {% csrf_token %}
 <input name="next" type="hidden" value="{{request.path_info}}" />
@@ -331,7 +334,11 @@ hr{border:1px dashed #eee;margin:10px;}
 <span id='Header1' type='Header'>
 <span id='main'>
     <h1 class='title'>
-       <a href='/'><img src="/media/static_media/styles/andreas/logo.png"></a> Attendance Board
+       <a href='/'><img src="/media/static_media/styles/andreas/logo.png"></a>
+       {% if user.is_authenticated %} 
+       {{ user }} @
+       {% endif %}
+       Attendance Board
     </h1>
     <h2>{{_("few smart words in here")}}</h2>
 </span>
@@ -341,7 +348,12 @@ hr{border:1px dashed #eee;margin:10px;}
  
  <div id='navigation'>
  <ul>
+ {% if user|is_teacher %}
  <li {% if curpage == "teachers" %}class='selected'{% endif %}><a href="/teacher/">{{_("teachers")}}</a></li>
+ {% endif %}
+ {% if user|is_superviser %}
+ <li {% if curpage == "groups" %}class='selected'{% endif %}><a href="/groups/">{{_("superviser")}}</a></li>
+ {% endif %}
  <li {% if curpage == "student" %}class='selected'{% endif %}><a href='/student/'>{{_("student")}}</a></li>
  <!-- 
  <li {% if curpage == "jobs" %}class='selected'{% endif %}><a href=''>{{_("tasks")}}</a></li>
@@ -359,6 +371,8 @@ hr{border:1px dashed #eee;margin:10px;}
     <div id='content'>
     {% block content %}
     {% endblock %}
+      <!-- spacer for skins that want sidebar and main to be the same height-->
+      <div class='clear'>&#160;</div>
     </div>
 
       <!-- spacer for skins that want sidebar and main to be the same height-->

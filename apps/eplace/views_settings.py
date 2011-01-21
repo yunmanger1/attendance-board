@@ -4,13 +4,14 @@ from django.http import Http404, HttpResponseRedirect, HttpResponse
 from django.template import RequestContext
 from django.conf import settings
 
-from eplace.models import is_teacher, is_dean, is_superviser
+from eplace.utils import is_teacher, is_dean, is_superviser
 from eplace.models import Subject, Group, LessonDay, Tick
 from eplace.forms import SettingsForm, get_default_settings
 
 from eplace.utils import json_response
 
 import datetime
+from django.core.urlresolvers import reverse
 
 ############## switches ###########################
 def req(f):
@@ -22,6 +23,13 @@ def req(f):
         return HttpResponseRedirect(reverse('eplace_index'))
     return nf
 ############## switches ###########################
+
+def index(request, template_name="eplace/teacher/settings.html"):
+    teacher = request.user.teacher
+    form = SettingsForm(initial=get_default_settings(request))
+    c = RequestContext(request, {'form': form, 'teacher' : teacher, 'curpage': 'settings'})
+    return render_to_response(template_name, c)
+
 
 @req
 def save(request, template_name="eplace/teacher/settings_form.html"):

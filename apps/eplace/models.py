@@ -66,6 +66,7 @@ class Student(models.Model):
         ordering = ('name',)
         unique_together = ('name', 'group',)      
 
+#====================================================
 
 class Dean(models.Model):
     user            = models.OneToOneField(User)
@@ -77,18 +78,6 @@ class Dean(models.Model):
     def get_name(self):
         return self.user.username
 
-    def save(self, *a, **kw):
-        super(Dean, self).save(*a,**kw)
-        group = UserGroup.objects.get(name=settings.DEANS_GROUP)
-        self.user.groups.add(group)
-        self.user.is_staff = True
-        self.user.save()
-        
-    def delete(self, *a, **kw):
-        group = UserGroup.objects.get(name=settings.DEANS_GROUP)
-        self.user.groups.remove(group)
-        self.user.save()
-        super(Dean, self).delete(*a,**kw)
         
     def __unicode__(self):
         return '{0}'.format(self.get_name())
@@ -99,21 +88,20 @@ class Teacher(models.Model):
     def get_name(self):
         return self.user.username
 
-    def save(self, *a, **kw):
-        super(Teacher, self).save(*a,**kw)
-        group = UserGroup.objects.get(name=settings.TEACHERS_GROUP)
-        self.user.groups.add(group)
-        self.user.is_staff = True
-        self.user.save()
-        
-    def delete(self, *a, **kw):
-        group = UserGroup.objects.get(name=settings.TEACHERS_GROUP)
-        self.user.groups.remove(group)
-        self.user.save()
-        super(Teacher, self).delete(*a,**kw)
+    def __unicode__(self):
+        return u'{0}'.format(self.get_name())
+    
+class Superviser(models.Model):
+    user            = models.OneToOneField(User)
+    groups          = models.ManyToManyField(Group, null=True, blank=True)
+    
+    def get_name(self):
+        return self.user.username
 
     def __unicode__(self):
         return u'{0}'.format(self.get_name())
+
+#===========================================================    
 
 class Lesson(models.Model):
     teacher         = models.ForeignKey(Teacher)
@@ -123,35 +111,15 @@ class Lesson(models.Model):
     week_days       = models.CharField(max_length=30, default='')
     type            = models.CharField(max_length=15, default='')
     
+    def short_name(self):
+        return self.subject.short_name
+    
     def __unicode__(self):
         if self.type != '':
             return u'{0} {1} {2}'.format(self.teacher, self.subject, self.type)
         else:
             return u'{0} {1}'.format(self.teacher, self.subject)
         
-class Superviser(models.Model):
-    user            = models.OneToOneField(User)
-    groups          = models.ManyToManyField(Group, null=True, blank=True)
-
-    def get_name(self):
-        return self.user.username
-
-    def save(self, *a, **kw):
-        super(Superviser, self).save(*a,**kw)
-        group = UserGroup.objects.get(name=settings.SUPERVISERS_GROUP)
-        self.user.groups.add(group)
-        self.user.is_staff = True
-        self.user.save()
-        
-    def delete(self, *a, **kw):
-        group = UserGroup.objects.get(name=settings.SUPERVISERS_GROUP)
-        self.user.groups.remove(group)
-        self.user.save()
-        super(Superviser, self).delete(*a,**kw)
-
-    def __unicode__(self):
-        return u'{0}'.format(self.get_name())
-
 
 class LessonDay(models.Model):
     lesson          = models.ForeignKey(Lesson)
@@ -203,27 +171,3 @@ class GenerateLessonDay(models.Model):
                 o.save()
             cur = cur.fromtimestamp(int(cur.strftime("%s"))+24*60*60)
         super(GenerateLessonDay, self).delete(*a,**kw)
-        
-def is_teacher(user):
-    if user.is_anonymous():
-        return False
-    t = Teacher.objects.filter(user=user)
-    if (t.count() > 0):
-        return True
-    return False
-    
-def is_superviser(user):
-    if user.is_anonymous():
-        return False
-    t = Superviser.objects.filter(user=user)
-    if (t.count() > 0):
-        return True
-    return False
-
-def is_dean(user):
-    if user.is_anonymous():
-        return False
-    t = Dean.objects.filter(user=user)
-    if (t.count() > 0):
-        return True
-    return False    
