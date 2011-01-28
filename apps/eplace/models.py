@@ -2,7 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User, Group as UserGroup
 from django.conf import settings
 
-import datetime
+import datetime, logging
+
+log = logging.getLogger(__package__)
 
 class Subject(models.Model):
     short_name      = models.CharField(max_length=10)
@@ -45,8 +47,8 @@ class Group(models.Model):
 class Student(models.Model):
     group           = models.ForeignKey(Group, blank=True, null=True)
     name            = models.CharField(max_length=50, blank=True)
-    email           = models.EmailField(blank=True)
-    info            = models.TextField(blank=True)
+    email           = models.EmailField(null=True, blank=True)
+    info            = models.TextField(null=True, blank=True)
     
     @property
     def start_year(self):
@@ -54,6 +56,19 @@ class Student(models.Model):
     
     def __unicode__(self):
         return u'{0}'.format(self.name)
+    
+    def fromString(self, line):
+        t = line.split(';')
+        n = len(t)
+        if n > 0:
+            self.name = t[0].strip()
+        if n > 1:
+            self.name = t[1].strip()
+        if n > 2:
+            self.email = t[2].strip()
+        if n > 3:
+            self.info = t[3].strip()
+            
     
     @models.permalink
     def link(self):
@@ -171,3 +186,23 @@ class GenerateLessonDay(models.Model):
                 o.save()
             cur = cur.fromtimestamp(int(cur.strftime("%s"))+24*60*60)
         super(GenerateLessonDay, self).delete(*a,**kw)
+        
+        
+class CopyPasteStudents(models.Model):
+    group           = models.ForeignKey(Group)
+    text            = models.TextField()
+    
+    def save(self, *a, **kw):
+        super(CopyPasteStudents, self).save(*a,**kw)
+        list = self.text.split('\n')
+        for line in list:
+            if line == '':
+                continue
+            s = Student(group=self.group)
+            s.fromString(line)
+            try:
+                ns = Student.objects.get(name=s.name)
+            except Student.DoesNotExist:
+                s.save()                
+        super(CopyPasteStudents, self).delete(*a,**kw)
+

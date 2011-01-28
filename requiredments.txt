@@ -4,4 +4,4 @@ django-robots
 django-uni-form
 django-registration
 django-invitation
-
+markdown

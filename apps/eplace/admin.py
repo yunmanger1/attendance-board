@@ -1,8 +1,10 @@
 from django.contrib import admin
 from django import forms
 from django.forms.formsets import formset_factory
-from eplace.models import Faculty, Group, Student, Subject, Superviser, Teacher
+from eplace.models import Faculty, Group, Student, Subject, Superviser, Teacher,\
+    CopyPasteStudents
 from eplace.models import Dean, GenerateLessonDay, LessonDay, Lesson
+from eplace.forms import CopyPasteStudentsForm
 
 #class PostAdmin(admin.ModelAdmin):
 #    list_display  = ('title', 'pub_date')
@@ -16,7 +18,12 @@ class GroupInline(admin.TabularInline):
     
 class StudentInline(admin.TabularInline):
     model = Student
-    extra = 3
+    extra = 0
+    
+class CopyPasteStudentsInline(admin.TabularInline):
+    model = CopyPasteStudents
+    form = CopyPasteStudentsForm
+    extra = 1
 
 class FacultyAdmin(admin.ModelAdmin):
     inlines = [GroupInline]
@@ -25,7 +32,7 @@ class GroupAdmin(admin.ModelAdmin):
     list_display = ('title', 'start_year','course')
     list_filter = ('start_year', 'title',)
     search_fields = ('title','start_year',)
-    inlines = [StudentInline]    
+    inlines = [CopyPasteStudentsInline, StudentInline]    
 
 class StudentAdmin(admin.ModelAdmin):
     list_display = ('name', 'group', 'start_year')
@@ -52,6 +59,11 @@ class GenerateLessonDayAdmin(admin.ModelAdmin):
     def has_change_permission(self, request, obj=None):
         return False # To remove the 'Save and continue editing' button
     
+
+class CopyPasteStudentsAdmin(admin.ModelAdmin):
+    def has_change_permission(self, request, obj=None):
+        return False # To remove the 'Save and continue editing' button
+
 admin.site.register(Faculty, FacultyAdmin)
 admin.site.register(Group, GroupAdmin)
 admin.site.register(Student, StudentAdmin)
@@ -59,7 +71,10 @@ admin.site.register(Subject, SubjectAdmin)
 admin.site.register(Superviser)
 admin.site.register(Teacher)
 admin.site.register(Dean, DeanAdmin)
-admin.site.register(GenerateLessonDay, GenerateLessonDayAdmin)
 admin.site.register(LessonDay)
 admin.site.register(Lesson)
+
+admin.site.register(CopyPasteStudents, CopyPasteStudentsAdmin)    
+admin.site.register(GenerateLessonDay, GenerateLessonDayAdmin)
+
 

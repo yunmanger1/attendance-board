@@ -8,8 +8,7 @@
 <path>/atboard/apps</path>
 </pydev_pathproperty>
 <pydev_pathproperty name="org.python.pydev.PROJECT_EXTERNAL_SOURCE_PATH">
-<path>/home/german/distr/django-trunk</path>
-<path>/home/german/work/libs</path>
+<path>/home/german/work/envs/atboard/src/django-trunk</path>
 </pydev_pathproperty>
 <pydev_variables_property name="org.python.pydev.PROJECT_VARIABLE_SUBSTITUTION">
 <key>DJANGO_MANAGE_LOCATION</key>

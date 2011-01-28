@@ -1,8 +1,13 @@
 from django import forms
 from django.conf import settings
 
-from eplace.models import Group, Subject, LessonDay, GenerateLessonDay, Lesson
-from common.models import UserField 
+from eplace.models import Group, Subject, LessonDay, GenerateLessonDay, Lesson,\
+    Student, CopyPasteStudents
+from common.models import UserField
+
+import logging, traceback
+
+log = logging.getLogger(__package__) 
 
 class TickForm(forms.Form):
     teacher = None 
@@ -49,6 +54,32 @@ class GenerateLessonDayForm(forms.ModelForm):
         )
         o.save()
         
+class CopyPasteStudentsForm(forms.ModelForm):
+    
+    class Meta:
+        model = CopyPasteStudents
+        
+    def clean_text(self):
+        text = self.cleaned_data.get("text")
+        list = text.split('\n')
+        for line in list:
+            if line == '':
+                continue
+            s = Student()                
+            s.fromString(line)
+#            log.debug(s.name)
+            try:                
+                ns = Student.objects.get(name=s.name)
+                error = forms.ValidationError("Student {0} already exist. He is in group {1}".format(s.name, ns.group))
+                self.fields['text'].error = error
+#                log.debug('raise error')
+                raise error 
+            except Student.DoesNotExist:
+                pass
+#                log.debug("{0} not found".format(s.name))
+        return text
+        
+        
         
 class SettingsForm(forms.Form):
     absence_percentage_limit = forms.IntegerField()
@@ -57,6 +88,7 @@ class SettingsForm(forms.Form):
         o,c = UserField.objects.get_or_create(user=user, key="absence_percentage_limit")
         o.value = self.cleaned_data.get('absence_percentage_limit', settings.ABSENCE_PERCENTAGE_LIMIT)
         o.save()
+        
         
 def get_default_settings(request):
     try:
