@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n eplace_tags %}
 <style>
 table.group-table .noborder, .noborder{
 border: 0px solid white;
@@ -9,17 +9,17 @@ text-align:center;
 }
 </style>
 <table class="group-table noborder" cellpadding=0 cellspacing=0 >
-<tr style="height:100px;">
-<td class="noborder">{{ _("student") }}</td>
+<tr>
+<td></td>
 {% for lesson in lessons %}
-<th class="noborder"><a class="box_rotate" title="{{ lesson }}">{{ lesson.short_name }}</a></th>
+<th><a title="{{ lesson }}" href="{{ lesson.link }}">{{ lesson.short_name }}</a></th>
 {% endfor %}
 </tr>
 {% for student in group.student_set.all %}
 <tr>
-<th><a href="{{ student.link }}">{{ student|get_absence_count:lesson }}</a></th>
+<th><a href="{{ student.link }}">{{ student }}</a></th>
 {% for lesson in lessons %}
-<td class="center">0</td>
+<td class="center"><a href="{% url eplace_students_student_lesson sid=student.pk,lid=lesson.pk%}">{{ student|get_absence_count:lesson }}</a></td>
 {% endfor %}
 </tr>
 {% endfor %}

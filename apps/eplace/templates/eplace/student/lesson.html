@@ -1,0 +1,30 @@
+{% extends "eplace/base.html" %}
+
+{% load eplace_tags %}
+
+{% block content %}
+<h1>{{ lesson.subject }}</h1>
+<h2>{{ lesson.teacher }}</h2>
+
+<table class="group-table" cellpadding="0" cellspacing="0">
+<tr>
+  <th>Name</th>
+  {% for l in lessons %}
+  <th title="Lesson is on {{ l.date|date:"d b Y" }} for {{ lesson.hours }} hours">{{ l.date|date:"d" }}</th>
+  {% endfor %}
+</tr>
+{% for group in lesson.groups.all %}
+{% with group.student_set.all as object_list %}
+{% for object in object_list %}
+<tr>
+  <td><a href="{{ object.link }}" title="Group: {{group}}">{{ object }}</a></td>
+  {% for l in lessons %}
+  <td class="tick" id="tick-{{ l.pk }}" title="{{ object }} {{ group }}
+  {% with l|get_tick:object as tick %}{% if tick %}Ticked on {{ tick.pub_date|date:"d b Y" }}.{% endif%}{% endwith %}" rel="{{ l.pk }}:{{ object.pk }}">{{ l|get_tick_display:object }}</td>
+  {% endfor %}
+</tr>
+{% endfor %}
+{% endwith %}
+{% endfor %}
+</table>
+{% endblock %}

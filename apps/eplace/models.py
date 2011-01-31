@@ -129,6 +129,11 @@ class Lesson(models.Model):
     def short_name(self):
         return self.subject.short_name
     
+    @models.permalink
+    def link(self):
+        return ('eplace_students_lesson', None, {'id': self.pk})
+    
+    
     def __unicode__(self):
         if self.type != '':
             return u'{0} {1} {2}'.format(self.teacher, self.subject, self.type)
@@ -143,6 +148,17 @@ class LessonDay(models.Model):
     class Meta:
         unique_together = ('date', 'lesson')
         ordering = ('date',)
+        
+    
+    def is_absent(self, student):
+        ticks = Tick.objects.filter(ld=self, student=student)
+        n = ticks.count()
+        if n > 0:
+            tick = ticks[0]
+            if tick.value == 0:
+                return True
+        return False
+                    
 
     @models.permalink
     def del_link(self):

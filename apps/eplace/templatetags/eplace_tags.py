@@ -55,5 +55,11 @@ def is_superviser(user):
 def is_dean(user):
     return isdean(user)
 
+@register.filter
 def get_absence_count(student, lesson):
-    return 0
+    lessons = lesson.lessonday_set.all()
+    count= 0
+    for lessonday in lessons:
+        if lessonday.is_absent(student):
+            count += 1
+    return count

@@ -12,6 +12,9 @@ from eplace.forms import TickForm, LessonDayForm, GenerateLessonDayForm
 from eplace.utils import json_response, getval, get_page
 
 import datetime
+import logging
+
+log = logging.getLogger(__package__)
 
 ############## switches ###########################
 def req(f):
@@ -33,9 +36,7 @@ def index(request, template_name="eplace/groups/index.html"):
 def group(request, gid, template_name="eplace/groups/group.html"):
     try:
         superviser = request.user.superviser
-        print 'gid:', int(gid)        
         group = superviser.groups.get(pk=int(gid))
-        print group
         lessons = get_group_lessons(group)
     except Superviser.DoesNotExist:
         raise Http404

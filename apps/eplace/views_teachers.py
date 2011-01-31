@@ -11,9 +11,14 @@ from eplace.forms import TickForm, LessonDayForm, GenerateLessonDayForm
 from eplace.utils import json_response, getval, get_page
 
 import datetime
+import logging
+from django.contrib.auth.decorators import login_required
+
+log = logging.getLogger(__package__)
 
 ############## switches ###########################
 def req(f):
+    @login_required
     def nf(request, *a, **kw):
         if (is_teacher(request.user)):
             return f(request, *a, **kw)
@@ -77,6 +82,7 @@ def generate(request, lid):
                 traceback.print_exc()
                 return json_response("CANT SAVE")
         else:
+            log.debug(glf.errors)
             return json_response("INVALID FORM")
     return json_response("ERROR")
 
