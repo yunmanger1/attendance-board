@@ -1,5 +1,6 @@
 #!/bin/bash
 
+source /opt/startwork
 workon atboard
 uwsgi_cmd="$uwsgi_bin/uwsgi -s $socket --env PYTHONPATH=$PYTHONPATH -p 4 -M -t 20 -r -C -L -d $log_dir/atboard.uwsgi.log -w wsgi"
 
