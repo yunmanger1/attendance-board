@@ -7,7 +7,7 @@ from common.models import UserField
 
 import logging, traceback
 
-log = logging.getLogger(__package__) 
+log = logging.getLogger('eplace') 
 
 class TickForm(forms.Form):
     teacher = None 

@@ -14,7 +14,7 @@ from eplace.utils import json_response, getval, get_page
 import datetime
 import logging
 
-log = logging.getLogger(__package__)
+log = logging.getLogger('eplace')
 
 ############## switches ###########################
 def req(f):

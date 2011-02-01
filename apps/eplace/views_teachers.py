@@ -14,7 +14,7 @@ import datetime
 import logging
 from django.contrib.auth.decorators import login_required
 
-log = logging.getLogger(__package__)
+log = logging.getLogger('eplace')
 
 ############## switches ###########################
 def req(f):

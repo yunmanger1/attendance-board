@@ -4,7 +4,7 @@ from django.conf import settings
 
 import datetime, logging
 
-log = logging.getLogger(__package__)
+log = logging.getLogger('eplace')
 
 class Subject(models.Model):
     short_name      = models.CharField(max_length=10)
