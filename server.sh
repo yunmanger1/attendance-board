@@ -11,7 +11,7 @@ socket=$nginx/sock/$name.$1.sock
 nginx_vhosts=$nginx/vhosts
 log_dir=$nginx/logs
 
-uwsgi_cmd="$uwsgi_bin/uwsgi -s  --env PYTHONPATH=$PYTHONPATH -p 4 -M -t 20 -r -C -L -d $log_dir/wsgi_$name.log -w wsgi"
+uwsgi_cmd="$uwsgi_bin/uwsgi -s $socket --env PYTHONPATH=$PYTHONPATH -p 4 -M -t 20 -r -C -L -d $log_dir/wsgi_$name.log -w wsgi"
 
 procid=$(ps -ef|grep "nginx: master process" | grep -v grep | awk '{print $2}')
 
