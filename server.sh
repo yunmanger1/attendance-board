@@ -2,7 +2,7 @@
 name=atboard
 pwd=$( readlink -f "$( dirname "$BASH_SOURCE" )" )
 
-PYTHONPATH=$PYTHONPATH:$pwd/apps:/opt/envs/$name/lib/python2.5/site-packages:/opt/envs/$name/src/django-trunk
+PYTHONPATH=$pwd/apps:$pwd/..:/opt/envs/$name/lib/python2.5/site-packages:/opt/envs/$name/src/django-trunk
 echo $PYTHONPATH
 
 nginx=/opt/nginx
