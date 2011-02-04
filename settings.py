@@ -98,7 +98,7 @@ SECRET_KEY = 'x7+2eb0f2zd_to48j11jrrk*j*bm_4k$%w%(%h0_1f-33mdrd*'
 #email stuff
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'atboard.kz@gmail.com'
-EMAIL_HOST_PASSWORD = 'damnsimple'
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
 EMAIL_SUBJECT_PREFIX = '[atboard.kz] '
