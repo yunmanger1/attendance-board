@@ -21,7 +21,7 @@ class Faculty(models.Model):
         verbose_name_plural = 'faculties'
     
     def __unicode__(self):
-        return u'{0}'.format(self.title)
+        return self.title
     
 class Group(models.Model):
     faculty         = models.ForeignKey(Faculty)
@@ -42,7 +42,7 @@ class Group(models.Model):
         
 
     def __unicode__(self):
-        return u'{0} {1} course'.format(self.title, self.course())
+        return '{0} {1} course'.format(self.title, self.course())
 
 class Student(models.Model):
     group           = models.ForeignKey(Group, blank=True, null=True)
@@ -55,7 +55,7 @@ class Student(models.Model):
         return self.group.start_year
     
     def __unicode__(self):
-        return u'{0}'.format(self.name)
+        return '{0}'.format(self.name)
     
     def fromString(self, line):
         t = line.split(';')
@@ -104,7 +104,7 @@ class Teacher(models.Model):
         return self.user.username
 
     def __unicode__(self):
-        return u'{0}'.format(self.get_name())
+        return '{0}'.format(self.get_name())
     
 class Superviser(models.Model):
     user            = models.OneToOneField(User)
@@ -114,7 +114,7 @@ class Superviser(models.Model):
         return self.user.username
 
     def __unicode__(self):
-        return u'{0}'.format(self.get_name())
+        return '{0}'.format(self.get_name())
 
 #===========================================================    
 
@@ -165,7 +165,7 @@ class LessonDay(models.Model):
         return ('eplace_teacher_ld_delete', None, {'lid' : self.pk})
     
     def __unicode__(self):
-        return u'{0} {1} {2}'.format(self.teacher, self.subject, self.group)
+        return '{0} {1} {2}'.format(self.teacher, self.subject, self.group)
     
 class Tick(models.Model):
     ld              = models.ForeignKey(LessonDay)
