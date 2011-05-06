@@ -9,8 +9,8 @@ def rel_to(to, *x):
 
 sys.path.append(rel("apps"))
 
-DISTR_DIR='/home/german/distr'
-LIB_DIR='/home/german/work/libs'
+#DISTR_DIR='/home/german/distr'
+#LIB_DIR='/home/german/work/libs'
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -25,11 +25,11 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'atboard',                      # Or path to database file if using sqlite3.
-        'USER': 'atboard',                      # Not used with sqlite3.
-        'PASSWORD': 'atboard',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'NAME': 'atboard', # Or path to database file if using sqlite3.
+        'USER': 'atboard', # Not used with sqlite3.
+        'PASSWORD': 'atboard', # Not used with sqlite3.
+        'HOST': '', # Set to empty string for localhost. Not used with sqlite3.
+        'PORT': '', # Set to empty string for default. Not used with sqlite3.
     }
 }
 
@@ -46,8 +46,8 @@ TIME_ZONE = 'Asia/Almaty'
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = 'ru-RU'
 LANGUAGES = (
-    ("ru","Russian"),
-    ("en","English"),
+    ("ru", "Russian"),
+    ("en", "English"),
 #    ("kz","Kazakh"),
 #    ("tr","Turkish"),
 )
@@ -62,8 +62,8 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = True
 
-DATE_INPUT_FORMATS = (   
-    '%d.%m.%Y',                 # '25.10.2006'
+DATE_INPUT_FORMATS = (
+    '%d.%m.%Y', # '25.10.2006'
 #    '%d/%m/%Y', '%d/%m/%y',     # '25/10/2006', '25/10/06'
 #    '%Y-%m-%d', '%y-%m-%d',     # '2006-10-25', '06-10-25'
 )
@@ -81,7 +81,7 @@ DATE_INPUT_FORMATS = (
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = rel('../media/atboard_media/')
+MEDIA_ROOT = rel('../../media/atboard/')
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
@@ -114,11 +114,11 @@ TEMPLATE_LOADERS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-"django.contrib.auth.context_processors.auth",
-"django.core.context_processors.debug",
-"django.core.context_processors.i18n",
-"django.core.context_processors.media",
-"django.contrib.messages.context_processors.messages",
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    "django.contrib.messages.context_processors.messages",
 )
 
 MIDDLEWARE_CLASSES = (
@@ -164,7 +164,7 @@ INSTALLED_APPS = (
     'uni_form',
     'registration',
 #    'invitation',
-    
+
     'eplace',
     'common',
 #    'sso',
@@ -222,7 +222,7 @@ LOGGING = {
             'level':'DEBUG',
             'class':'logging.StreamHandler',
             'formatter': 'verbose'
-        },        
+        },
     },
     'loggers': {
         'django.request':{
