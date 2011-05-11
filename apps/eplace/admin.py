@@ -2,9 +2,11 @@ from django.contrib import admin
 from django import forms
 from django.forms.formsets import formset_factory
 from eplace.models import Faculty, Group, Student, Subject, Superviser, Teacher,\
-    CopyPasteStudents
+    CopyPasteStudents, EplaceUser
 from eplace.models import Dean, GenerateLessonDay, LessonDay, Lesson
 from eplace.forms import CopyPasteStudentsForm
+from django.contrib.auth.admin import UserAdmin
+from django.http import HttpResponseRedirect
 
 #class PostAdmin(admin.ModelAdmin):
 #    list_display  = ('title', 'pub_date')
@@ -39,6 +41,38 @@ class StudentAdmin(admin.ModelAdmin):
     list_filter = ( 'name', 'group')
     search_fields = ('name','group__start_year', 'group__title', 'group__faculty__title')
     
+def make_teacher(self, request, queryset):
+    for user in queryset:
+        user.make_teacher()
+make_teacher.short_description = "Make selected users - teacher"
+
+def make_superviser(self, request, queryset):
+    for user in queryset:
+        user.make_superviser()
+make_superviser.short_description = "Make selected users - superviser"
+
+#add_view = UserAdmin.add_view
+#change_view = UserAdmin.change_view
+#delete_view = UserAdmin.delete_view
+
+class EplaceUserAdmin(UserAdmin):
+    list_display = ('username', 'first_name', 'last_name', 'is_teacher','is_superviser')
+    #list_filter = ('username', 'title',)
+    search_fields = ('username','first_name','last_name')
+    inlines = [CopyPasteStudentsInline, StudentInline]
+    actions = [make_teacher, make_superviser]
+    
+    def has_add_permission(self, *args, **kwargs):
+        return False
+    
+    def has_delete_permission(self, *args, **kwargs):
+        return False
+    
+    def change_view(self, request, *args, **kwargs):
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
+    
+    
+    
 #class SubjectForm(forms.ModelForm):
 #    
 #    class Meta: 
@@ -69,9 +103,10 @@ admin.site.register(Group, GroupAdmin)
 admin.site.register(Student, StudentAdmin)
 admin.site.register(Subject, SubjectAdmin)
 admin.site.register(Superviser)
-admin.site.register(Teacher)
+admin.site.register(EplaceUser, EplaceUserAdmin)
+#admin.site.register(Teacher)
 admin.site.register(Dean, DeanAdmin)
-admin.site.register(LessonDay)
+#admin.site.register(LessonDay)
 admin.site.register(Lesson)
 
 admin.site.register(CopyPasteStudents, CopyPasteStudentsAdmin)    

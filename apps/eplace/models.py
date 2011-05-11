@@ -63,11 +63,11 @@ class Student(models.Model):
         if n > 0:
             self.name = t[0].strip()
         if n > 1:
-            self.name = t[1].strip()
+            self.email = t[1].strip()
         if n > 2:
-            self.email = t[2].strip()
-        if n > 3:
-            self.info = t[3].strip()
+            self.info = t[2].strip()
+#        if n > 3:
+#            self.info = t[3].strip()
             
     
     @models.permalink
@@ -202,6 +202,33 @@ class GenerateLessonDay(models.Model):
                 o.save()
             cur = cur.fromtimestamp(int(cur.strftime("%s"))+24*60*60)
         super(GenerateLessonDay, self).delete(*a,**kw)
+
+
+
+class EplaceUser(User):
+    
+    class Meta:
+        proxy = True
+
+    def is_teacher(self):
+        try:
+            Teacher.objects.get(user=self)
+            return True
+        except Teacher.DoesNotExist:
+            return False
+        
+    def is_superviser(self):
+        try:
+            Superviser.objects.get(user=self)
+            return True
+        except Superviser.DoesNotExist:
+            return False
+        
+    def make_teacher(self):
+        Teacher.objects.get_or_create(user=self)
+
+    def make_superviser(self):
+        Superviser.objects.get_or_create(user=self)
         
         
 class CopyPasteStudents(models.Model):
@@ -221,4 +248,3 @@ class CopyPasteStudents(models.Model):
             except Student.DoesNotExist:
                 s.save()                
         super(CopyPasteStudents, self).delete(*a,**kw)
-
