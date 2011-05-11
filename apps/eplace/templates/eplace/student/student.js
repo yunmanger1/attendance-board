@@ -24,8 +24,8 @@ student.filter = function(search){
 };
 student.reset = function(search){
 	var k = eval($('input#page-input').val());
-	var csrf = 'csrfmiddlewaretoken'+$('input[name=csrfmiddlewaretoken]').val();
-	var data = 'page='+k+'&csrfmiddlewaretoken='+csrf;
+	//var csrf = $('input[name=csrfmiddlewaretoken]').val();
+	var data = 'page='+k;
 	if (search == null){
 		search = $('input#filter-input').val();
 	}
