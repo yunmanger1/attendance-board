@@ -21,11 +21,11 @@ def deploy_media(conf):
     if not os.path.exists(MEDIA_ROOT):
         os.mkdir(MEDIA_ROOT)
     if os.path.exists(os.path.join(MEDIA_ROOT,"admin")):
-        _("rm {0}".format(os.path.join(MEDIA_ROOT,"admin")))
-    _("ln -s {0} {1}".format(ADMIN_MEDIA, os.path.join(MEDIA_ROOT,"admin")))
+        _("rm %s" % (os.path.join(MEDIA_ROOT,"admin")))
+    _("ln -s %s %s" % (ADMIN_MEDIA, os.path.join(MEDIA_ROOT,"admin")))
     if os.path.exists(os.path.join(MEDIA_ROOT,"static_media")):
-        _("rm {0}".format(os.path.join(MEDIA_ROOT,"static_media")))
-    _("ln -s {0} {1}".format(os.path.join(PROJECT_ROOT,"media","static_media"), os.path.join(MEDIA_ROOT,"static_media")))
+        _("rm %s" % (os.path.join(MEDIA_ROOT,"static_media")))
+    _("ln -s %s %s" % (os.path.join(PROJECT_ROOT,"media","static_media"), os.path.join(MEDIA_ROOT,"static_media")))
     
 
 class Command(BaseCommand):
@@ -40,6 +40,6 @@ class Command(BaseCommand):
 #        _("bash {0}/bin/copy-project.sh {1}".format(WORK_ROOT, project_name))
         if os.path.exists("etc"):
             _("rm etc")
-        _("ln -s etcs/{0} etc".format(conf))
+        _("ln -s etcs/%s etc" % (conf))
         deploy_media(conf)
 
