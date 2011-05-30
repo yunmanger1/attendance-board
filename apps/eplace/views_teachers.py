@@ -28,6 +28,7 @@ def req(f):
     return nf
 ############## switches ###########################
 
+@req
 def index(request, template_name="eplace/teacher/index.html"):
     teacher = request.user.teacher
     c = RequestContext(request, {'teacher' : teacher, 'curpage': 'teachers'})
@@ -35,6 +36,9 @@ def index(request, template_name="eplace/teacher/index.html"):
 
 @req
 def subject(request, lid, template_name="eplace/teacher/subject.html"):
+    """
+    this view returns subject attendance table
+    """
     try:
         teacher = request.user.teacher
         lesson = teacher.lesson_set.get(pk=int(lid))
