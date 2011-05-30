@@ -1,4 +1,8 @@
 *.pyc
 *local*
 *pydev*
+<<<<<<< HEAD
 .settings/*
+=======
+etc
+>>>>>>> b0e837ebefb80c8dc2118f023700b019e8c057c6

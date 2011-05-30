@@ -1,12 +1,15 @@
 # Django settings for code_project project.
 import sys, os
 
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+
 def rel(*x):
     return os.path.join(os.path.abspath(os.path.dirname(__file__)), *x)
 
 def rel_to(to, *x):
     return os.path.join(to, *x)
 
+sys.path.append(PROJECT_ROOT)
 sys.path.append(rel("apps"))
 
 #DISTR_DIR='/home/german/distr'
@@ -167,6 +170,7 @@ INSTALLED_APPS = (
 
     'eplace',
     'common',
+    'etcs',
 #    'sso',
 )
 
